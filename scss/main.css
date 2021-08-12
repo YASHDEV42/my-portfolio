@@ -1,0 +1,682 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+  text-transform: capitalize;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: #111;
+  color: #fff;
+  position: relative;
+}
+
+#navBar {
+  position: absolute;
+  top: 0;
+  left: 12.5%;
+  width: 75vw;
+  z-index: 100;
+}
+
+.container {
+  width: 75vw;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.navigation {
+  height: 3rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.navigation h2 {
+  font-weight: bold;
+  font-size: 1.7em;
+  color: #f1ec40;
+}
+
+.navigation ul {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.navigation ul li {
+  margin-left: 2rem;
+  list-style: none;
+  font-size: 1.2em;
+}
+
+.navigation ul li a {
+  text-decoration: none;
+  font-weight: 500;
+  color: #fff;
+}
+
+#home {
+  overflow: hidden;
+}
+
+.hero {
+  position: relative;
+  min-height: 100vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.hero .imgBx {
+  width: 32.5vw;
+}
+
+.hero .content {
+  width: 32.5vw;
+}
+
+.hero .content h1 {
+  font-size: 3em;
+  padding: 0;
+  letter-spacing: 1px;
+}
+
+.hero .content h1 span {
+  color: #f1ec40;
+}
+
+.hero .content h2 {
+  font-size: 2em;
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+  letter-spacing: 1px;
+}
+
+.hero .content .primaryBtn {
+  outline: none;
+  border: none;
+  padding: 0.3rem 1.3rem;
+  font-size: 1.3em;
+  font-weight: bold;
+  background: #f1ec40;
+  border: 2px solid #f1ec40;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+}
+
+.hero .content .primaryBtn:hover {
+  background-color: #111;
+  color: #f1ec40;
+  letter-spacing: 1.5px;
+}
+
+.hero .content .primaryBtn a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #111;
+}
+
+.hero .content .primaryBtn:hover a {
+  color: #f1ec40;
+  text-decoration: underline;
+}
+
+.hero .content .secondaryBtn {
+  outline: none;
+  border: none;
+  padding: 0.3rem 1.3rem;
+  font-size: 1.3em;
+  font-weight: bold;
+  background: #111;
+  border: 2px solid #f1ec40;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+  cursor: pointer;
+  color: #f1ec40;
+}
+
+.hero .content .secondaryBtn:hover {
+  letter-spacing: 1.5px;
+}
+
+.hero .content .secondaryBtn a {
+  text-decoration: none;
+  cursor: pointer;
+  color: #f1ec40;
+}
+
+.hero .content .secondaryBtn:hover a {
+  text-decoration: underline;
+}
+
+/*start about*/
+.title {
+  font-size: 1.5em;
+  text-align: center;
+  margin-top: 1rem;
+  min-height: 10vh;
+  position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.title h1 {
+  border-bottom: 5px solid #f1ec40;
+}
+
+.about {
+  min-height: 90vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  -ms-flex-wrap: nowrap;
+      flex-wrap: nowrap;
+  padding-top: 150px;
+}
+
+.about .content .me {
+  height: 50%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+}
+
+.about .content .me h2 {
+  border-bottom: 3px solid #f1ec40;
+  margin-bottom: 1rem;
+}
+
+.about .content .me p {
+  font-size: 1.1em;
+  letter-spacing: 1px;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+}
+
+.about .content h2 {
+  border-bottom: 3px solid #f1ec40;
+  margin: 1rem 0;
+  display: inline;
+}
+
+.about .content .skill {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -webkit-box-align: start;
+      -ms-flex-align: start;
+          align-items: flex-start;
+  flex-direction: row;
+  margin-top: 2rem;
+}
+
+.about .content .skill .item {
+  margin-bottom: 30px;
+  position: relative;
+  margin-right: 20px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
+
+.about .content .skill .chart .persent {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  -webkit-transform: translate(-50%, -10%);
+          transform: translate(-50%, -10%);
+}
+
+.about .imgBx {
+  width: 150%;
+}
+
+.about .imgBx img {
+  width: 100%;
+}
+
+/*end about*/
+/*start services*/
+.services {
+  min-height: 90vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+}
+
+.services .card {
+  margin-top: 50px;
+  margin-right: 5px;
+  width: 30%;
+  height: 400px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-direction: column;
+      flex-direction: column;
+  background-color: #333;
+  padding: 2rem;
+  -webkit-transform-style: preserve-3d;
+          transform-style: preserve-3d;
+  -webkit-transform: perspective(1000px);
+          transform: perspective(1000px);
+}
+
+.services .card .iconBx {
+  width: 50%;
+  -webkit-transform: translateZ(50px);
+          transform: translateZ(50px);
+}
+
+.services .card .content {
+  text-align: center;
+}
+
+.services .card .content h2 {
+  font-size: 1.7em;
+  margin-bottom: 1rem;
+  -webkit-transform: translateZ(50px);
+          transform: translateZ(50px);
+}
+
+.services .card .content p {
+  font-weight: 400;
+  color: #ccc;
+  -webkit-transform: translateZ(50px);
+          transform: translateZ(50px);
+}
+
+.services .card:hover {
+  background-color: #f1ec40;
+  color: #111;
+}
+
+.services .card:hover .content p {
+  color: #111;
+  font-weight: 600;
+}
+
+/*end services*/
+/*start project*/
+.project {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  padding-top: 100px;
+}
+
+.project a {
+  list-style: none;
+  color: #111;
+  width: 450px;
+  margin-top: 30px;
+  margin-right: 5px;
+}
+
+.project .workBx {
+  position: relative;
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  border: 5px solid #f1ec40;
+}
+
+.project .workBx .imgBx {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}
+
+.project .workBx .imgBx img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+}
+
+.project .workBx:hover .imgBx {
+  -webkit-transform: translateY(-100%);
+          transform: translateY(-100%);
+}
+
+.project .workBx .textBx {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: #f1ec40;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-transform: translateY(100%);
+          transform: translateY(100%);
+  -webkit-transition: 0.5s ease-in-out;
+  transition: 0.5s ease-in-out;
+}
+
+.project .workBx:hover .textBx {
+  -webkit-transform: translateY(0);
+          transform: translateY(0);
+}
+
+.project .workBx:hover .textBx h3 {
+  color: #111;
+  font-size: 2em;
+  -webkit-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+/*end project*/
+/*start contact*/
+#contact .container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+  -ms-flex-direction: column;
+      flex-direction: column;
+}
+
+#contact .container .contact {
+  width: 100%;
+  margin-bottom: 275px;
+}
+
+.row100 {
+  position: relative;
+  width: 100%;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(300px, 1fr))[auto-fit];
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.row100 .col {
+  position: relative;
+  width: 100%;
+  padding: 0 10px;
+  margin: 30px 0 10px;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+}
+
+.row100 .col .inputBox {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  color: #f1ec40;
+}
+
+.row100 .col .inputBox input,
+.row100 .col .inputBox textarea {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  -webkit-box-shadow: none;
+          box-shadow: none;
+  border: none;
+  outline: none;
+  font-size: 18px;
+  padding: 0 10px;
+  z-index: 1;
+  color: #000;
+  text-transform: none;
+}
+
+.row100 .col .inputBox .text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  line-height: 40px;
+  font-size: 18px;
+  padding: 0 10px;
+  display: block;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  pointer-events: none;
+}
+
+.row100 .col .inputBox .line {
+  position: absolute;
+  bottom: 0;
+  display: block;
+  width: 100%;
+  height: 2px;
+  background: #f1ec40;
+  -webkit-transition: 0.5s;
+  transition: 0.5s;
+  border-radius: 2px;
+  pointer-events: none;
+}
+
+.row100 .col .inputBox.textarea {
+  position: relative;
+  width: 100%;
+  height: 100px;
+  padding: 10px 0;
+}
+
+.row100 .col .inputBox.textarea textarea {
+  resize: none;
+  height: 100%;
+  /*background: transparent;
+        box-shadow: none;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        padding: 0 10px;
+        z-index: 1;
+        color: #000;
+        text-transform: none;position: absolute;
+        width: 100%;*/
+}
+
+.row100 .inputBox input:focus + .text,
+.row100 .inputBox input:valid + .text {
+  top: -35px;
+  left: -10px;
+}
+
+.row100 .inputBox input:focus ~ .line,
+.row100 .inputBox input:valid ~ .line {
+  height: 100%;
+}
+
+.row100 .inputBox textarea:focus + .text,
+.row100 .inputBox textarea:valid + .text {
+  top: -35px;
+  left: -10px;
+}
+
+.row100 .inputBox textarea:focus ~ .line,
+.row100 .inputBox textarea:valid ~ .line {
+  height: 100%;
+}
+
+input[type="submit"] {
+  border: none;
+  padding: 7px 35px;
+  cursor: pointer;
+  outline: none;
+  background: #f1ec40;
+  color: #111;
+  font-size: 18px;
+  border-radius: 2px;
+}
+
+/*end contact*/
+/*# sourceMappingURL=main.css.map */
