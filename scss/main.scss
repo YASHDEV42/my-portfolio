@@ -544,6 +544,7 @@ input[type="submit"] {
   .services {
     grid-template-columns: repeat(1, 1fr);
     grid-gap: 30px;
+    margin-bottom: 40px;
   }
   .project {
     grid-template-columns: repeat(1, 1fr);
@@ -551,6 +552,7 @@ input[type="submit"] {
   .navigation {
     .nav-links {
       width: 100%;
+      position: fixed;
     }
   }
 }
