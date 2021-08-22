@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="scss/main.css">
+    <script src="/js/gsap.js" defer></script>
     <title>YASH</title>
 </head>
 <body>
@@ -13,13 +14,13 @@
     <!-- Start Nav-Bar -->
     <section id='navBar'>
         <div class="navigation">
-            <h2>YASH</h2>
+            <h2 class="anim2">YASH</h2>
             <ul class="nav-links">
-                <li><a href="#home">HOME</a></li>
-                <li><a href="#about">ABOUT</a></li>
-                <li><a href="#services">SERVICES</a></li>
-                <li><a href="#project">PROJECT</a></li>
-                <li><a href="#contact">CONTACT</a></li>
+                <li class="anim2"><a href="#home">HOME</a></li>
+                <li class="anim2"><a href="#about">ABOUT</a></li>
+                <li class="anim2"><a href="#services">SERVICES</a></li>
+                <li class="anim2"><a href="#project">PROJECT</a></li>
+                <li class="anim2"><a href="#contact">CONTACT</a></li>
             </ul>
             <div class="burger">
                 <div class="line1"></div>
@@ -33,13 +34,13 @@
     <section id="home">
         <div class="container">
             <div class="hero">
-                <div class="content">
-                    <h1><span>YA</span>HYA <span>SH</span>ANNAT</h1>
-                    <h2>Front-End Developer</h2>
-                    <button class="primaryBtn"><a href="#project">projects</a></button>
-                    <button class="secondaryBtn"><a href="#contact">contact</a></button>
+                <div class="content anim1">
+                    <h1 class="anim1"><span>YA</span>HYA <span>SH</span>ANNAT</h1>
+                    <h2 class="anim1">Front-End Developer</h2>
+                    <button class="primaryBtn anim1"><a href="#project">projects</a></button>
+                    <button class="secondaryBtn anim1"><a href="#contact">contact</a></button>
                 </div>
-                <div class="imgBx">
+                <div class="imgBx anim1">
                     <img src="/img/hero.svg" alt="">
                 </div>
             </div>
@@ -60,11 +61,11 @@
                         <br>
                         <p>I have a youtube channel that I make videos about web development; if you are interested, check out the link below in the footer
                         </p>
-                        <button class="primaryBtn"><a>download my CV</a></button>
+                        <button class="primaryBtn"><a href="./pages/cv.html" target="_blank">download my CV</a></button>
                     </div>
                     
                 </div>
-                <div class="imgBx">
+                <div class="imgBx imgScroll">
                     <img src="/img/about-me.svg" alt="about-me">
                 </div>
             </div>
@@ -263,5 +264,7 @@
     <script src="/js/main.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/vanilla-tilt/1.7.1/vanilla-tilt.min.js" integrity="sha512-xTXLkWCanTzPE4g+vyMXdJ1MYKwuhdJqxNfPDE8sHnwwHBXTZY0VNWBiCRiDtGEtLzmLkK5GCSXshPCP2kt8Ug==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="vanilla-tilt.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.7.0/ScrollTrigger.min.js"></script>
 </body>
 </html>

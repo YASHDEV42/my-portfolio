@@ -30,8 +30,8 @@ body {
   font-weight: bold;
   background: $color;
   border: 2px solid $color;
-  transition: all 0.3s ease-in-out;
   cursor: pointer;
+  transition: letter-spacing 0.3s ease-in-out;
   &:hover {
     background-color: #111;
     color: $color;
@@ -78,6 +78,10 @@ body {
         text-decoration: none;
         font-weight: 500;
         color: #fff;
+        transition: all 0.3s ease;
+      }
+      &:hover a {
+        color: $color;
       }
     }
   }
@@ -94,6 +98,7 @@ body {
 }
 #home {
   overflow: hidden;
+  position: relative;
 }
 .hero {
   position: relative;
@@ -132,7 +137,7 @@ body {
       font-weight: bold;
       background: #111;
       border: 2px solid $color;
-      transition: all 0.3s ease-in-out;
+      transition: letter-spacing 0.3s ease-in-out;
       cursor: pointer;
       color: $color;
       &:hover {

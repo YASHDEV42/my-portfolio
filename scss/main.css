@@ -24,9 +24,9 @@ body {
   font-weight: bold;
   background: #f1ec40;
   border: 2px solid #f1ec40;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
   cursor: pointer;
+  -webkit-transition: letter-spacing 0.3s ease-in-out;
+  transition: letter-spacing 0.3s ease-in-out;
 }
 
 .primaryBtn:hover {
@@ -114,6 +114,12 @@ body {
   text-decoration: none;
   font-weight: 500;
   color: #fff;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.navigation .nav-links li:hover a {
+  color: #f1ec40;
 }
 
 .navigation .burger {
@@ -131,6 +137,7 @@ body {
 
 #home {
   overflow: hidden;
+  position: relative;
 }
 
 .hero {
@@ -190,8 +197,8 @@ body {
   font-weight: bold;
   background: #111;
   border: 2px solid #f1ec40;
-  -webkit-transition: all 0.3s ease-in-out;
-  transition: all 0.3s ease-in-out;
+  -webkit-transition: letter-spacing 0.3s ease-in-out;
+  transition: letter-spacing 0.3s ease-in-out;
   cursor: pointer;
   color: #f1ec40;
 }
