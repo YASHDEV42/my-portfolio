@@ -42,7 +42,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ loca
     <Reveal><Link href="/#work" className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-accent"><ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" />{t("CaseStudy.allWork")}</Link></Reveal>
     <header className="mt-8 border-b border-border pb-10">
       <Reveal><div className="flex flex-wrap items-center gap-3"><span className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">{project.category}</span><span className="label text-muted-foreground" dir="ltr">{project.year}</span></div></Reveal>
-      <Reveal delay={0.05}><h1 className="mt-5 font-serif text-[clamp(2.5rem,7vw,5rem)] font-medium leading-[0.98] tracking-[-0.02em] text-balance" dir="ltr">{project.name}</h1></Reveal>
+      <Reveal delay={0.05}><h1 className="display-heading mt-5 font-serif text-[clamp(2.5rem,7vw,5rem)] font-medium tracking-[-0.02em] text-balance" dir="ltr">{project.name}</h1></Reveal>
       <Reveal delay={0.1}><p className="mt-4 max-w-2xl text-xl text-muted-foreground text-pretty">{project.tagline}</p></Reveal>
       <Reveal delay={0.15}><div className="mt-8 flex flex-wrap gap-4">
         <a href={project.live} target="_blank" rel="noopener noreferrer" className="group inline-flex items-center gap-2 rounded-full bg-accent px-5 py-3 font-medium text-accent-foreground">{t("CaseStudy.visit")}<ArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 rtl:rotate-[-90deg]" /></a>
@@ -54,7 +54,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ loca
     <div className="mt-16 grid gap-12 md:grid-cols-[1fr_2fr] md:gap-16"><aside className="md:sticky md:top-28 md:self-start"><Reveal><dl className="space-y-6">
       <div><dt className="label text-muted-foreground">{t("CaseStudy.role")}</dt><dd className="mt-1.5">{project.role}</dd></div>
       <div><dt className="label text-muted-foreground">{t("CaseStudy.year")}</dt><dd className="mt-1.5" dir="ltr">{project.year}</dd></div>
-      <div><dt className="label text-muted-foreground">{t("CaseStudy.stack")}</dt><dd className="mt-2 flex flex-wrap gap-2" dir="ltr">{project.stack.map((value) => <span key={value} className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground">{value}</span>)}</dd></div>
+      <div><dt className="label text-muted-foreground">{t("CaseStudy.stack")}</dt><dd className="mt-2 flex flex-wrap gap-2" dir="ltr">{project.stack.map((value) => <span key={value} className="rounded-full border border-border px-2.5 py-1 text-xs leading-relaxed text-muted-foreground">{value}</span>)}</dd></div>
     </dl></Reveal></aside>
     <div className="space-y-12"><CaseBlock title={t("CaseStudy.problem")} body={project.problem} /><CaseBlock title={t("CaseStudy.contribution")} body={project.contribution} />
       <div><Reveal><h2 className="font-serif text-2xl font-semibold tracking-tight">{t("CaseStudy.decisions")}</h2></Reveal><ul className="mt-5 space-y-4">{project.decisions.map((decision, index) => <Reveal key={index} delay={index * 0.05}><li className="flex gap-4 border-s-2 border-accent/40 ps-4"><span className="font-serif text-accent" dir="ltr">{`0${index + 1}`}</span><span className="leading-relaxed text-muted-foreground text-pretty">{decision}</span></li></Reveal>)}</ul></div>

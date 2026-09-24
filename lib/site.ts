@@ -57,7 +57,7 @@ const projects: ProjectSource[] = [
     slug: "yshai",
     name: "YSHAI",
     year: "2025",
-    image: "/img/screenshot-2026-04-23_15-08-14.png",
+    image: "/img/project-1.png",
     live: "https://www.yshai.cloud/",
     repoPrivate: true,
     videos: [
@@ -70,7 +70,7 @@ const projects: ProjectSource[] = [
     slug: "yashblog",
     name: "YASHBLOG",
     year: "2024",
-    image: "/img/project-1.png",
+    image: "/img/project-3.png",
     live: "https://yashblog-hazel.vercel.app/",
     repo: "https://github.com/YASHDEV42/YASHBLOG",
     videos: [
@@ -91,7 +91,7 @@ const projects: ProjectSource[] = [
     slug: "yashstore",
     name: "YASHSTORE",
     year: "2024",
-    image: "/img/project-3.png",
+    image: "/img/project-4.png",
     live: "https://yashstore-eosin.vercel.app/",
     repo: "https://github.com/YASHDEV42/YASHSTORE",
     videos: [
@@ -103,7 +103,7 @@ const projects: ProjectSource[] = [
     slug: "yashtask",
     name: "YASHTASK",
     year: "2023",
-    image: "/img/project-4.png",
+    image: "/img/project-5.png",
     live: "https://task-mangement-cyan.vercel.app/",
     repo: "https://github.com/YASHDEV42/YASHTASK",
     videos: [
@@ -115,7 +115,7 @@ const projects: ProjectSource[] = [
     slug: "quizyourself",
     name: "QuizYourself",
     year: "2023",
-    image: "/img/project-5.png",
+    image: "/img/project-6.png",
     live: "https://quiz-yourself.vercel.app/",
     repo: "https://github.com/YASHDEV42/QuizYourself",
     videos: [

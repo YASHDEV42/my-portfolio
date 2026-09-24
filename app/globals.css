@@ -53,6 +53,7 @@
     background-color: var(--background);
     color: var(--foreground);
     font-family: var(--font-sans);
+    line-height: 1.5;
   }
   [dir="rtl"] body {
     font-family: var(--font-noto-sans-arabic), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
@@ -89,13 +90,28 @@
   [dir="rtl"] .font-serif[dir="ltr"] {
     font-family: var(--font-fraunces), ui-serif, Georgia, serif;
   }
-  [dir="rtl"] .hero-headline {
-    line-height: 1.16;
+  /* Display faces have tall accents and descenders. These metrics keep them
+     inside their line boxes at every breakpoint and in every locale. */
+  .display-heading {
+    line-height: 1.08;
+  }
+  .hero-headline {
+    line-height: 1;
+  }
+  [dir="rtl"] .display-heading {
+    line-height: 1.28;
     letter-spacing: 0;
   }
-  [dir="rtl"] .hero-reveal-line {
-    margin-block: -0.16em -0.2em;
-    padding-block: 0.16em 0.2em;
+  [dir="rtl"] .hero-headline {
+    line-height: 1.22;
+    letter-spacing: 0;
+  }
+  /* Expand the reveal mask around the visual line box, then cancel that
+     expansion in layout. The animation stays masked without shaving glyphs. */
+  .reveal-line-mask {
+    margin-block: -0.18em -0.26em;
+    padding-block: 0.18em 0.26em;
+    overflow: hidden;
   }
   [dir="rtl"] .hero-headline .italic,
   [dir="rtl"] h2 .italic {
@@ -108,6 +124,8 @@
     letter-spacing: 0.18em;
     font-size: 0.72rem;
     font-weight: 500;
+    line-height: 1.5;
+    padding-block: 0.04em;
   }
   [dir="rtl"] .label {
     text-transform: none;

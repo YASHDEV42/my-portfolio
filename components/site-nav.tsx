@@ -55,7 +55,7 @@ export function LanguageSelector({ mobile = false }: { mobile?: boolean }) {
         ref={triggerRef}
         type="button"
         className={`inline-flex items-center justify-center gap-2 rounded-full border border-border bg-card transition-colors hover:border-accent hover:text-accent ${
-          mobile ? "h-12 px-5 font-medium" : "h-10 w-10"
+          mobile ? "min-h-12 px-5 py-2.5 font-medium leading-snug" : "h-10 w-10"
         }`}
         aria-label={t("chooseLanguage")}
         aria-haspopup="menu"
@@ -111,7 +111,7 @@ export function LanguageSelector({ mobile = false }: { mobile?: boolean }) {
                 aria-checked={language.locale === locale}
                 lang={language.locale}
                 dir={language.locale === "ar" ? "rtl" : "ltr"}
-                className="flex w-full items-center justify-between rounded-sm px-3 py-2.5 text-start text-sm text-foreground transition-colors hover:bg-muted focus-visible:bg-muted"
+                className="flex w-full items-center justify-between rounded-sm px-3 py-2.5 text-start text-sm leading-relaxed text-foreground transition-colors hover:bg-muted focus-visible:bg-muted"
                 onClick={() => {
                   setOpen(false)
                   if (language.locale !== locale) router.replace(`${pathname}${window.location.hash}` as never, { locale: language.locale })
@@ -257,7 +257,7 @@ export function SiteNav() {
                   <a
                     href={l.href}
                     onClick={() => setOpen(false)}
-                    className="block font-serif text-4xl font-semibold tracking-tight text-foreground"
+                    className="block py-0.5 font-serif text-4xl font-semibold leading-[1.2] tracking-tight text-foreground"
                   >
                     {l.label}
                   </a>
@@ -267,7 +267,7 @@ export function SiteNav() {
             <a
               href="#contact"
               onClick={() => setOpen(false)}
-              className="mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-medium text-accent-foreground"
+              className="mt-10 inline-flex w-fit items-center gap-2 rounded-full bg-accent px-5 py-3 font-medium leading-snug text-accent-foreground"
             >
               {t("contact")}
             </a>

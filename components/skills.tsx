@@ -8,10 +8,10 @@ export function Skills() {
   const t = useTranslations("Skills")
   const strengths = [1, 2, 3].map((i) => ({ title: t(`strength${i}`), body: t(`strength${i}Body`) }))
   const skillGroups = [
-    { category: "Frontend", note: t("frontendNote"), items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"] },
-    { category: "Backend", note: t("backendNote"), items: ["NestJS", "Node.js", "REST", "Real-time / WebSockets"] },
-    { category: "Data", note: t("dataNote"), items: ["MongoDB", "PostgreSQL"] },
-    { category: t("practice"), note: t("practiceNote"), items: [t("cleanCode"), t("performance"), t("rtl"), "Git"] },
+    { category: t("frontend"), note: t("frontendNote"), items: ["React", "Next.js", "TypeScript", "Tailwind CSS", "Shadcn/ui", "Framer Motion", "i18n"] },
+    { category: t("backend"), note: t("backendNote"), items: ["Node.js", "NestJS", "Express.js", "REST APIs", "Authentication", "Webhooks", "Socket.io"] },
+    { category: t("dataJobs"), note: t("dataNote"), items: ["PostgreSQL", "MongoDB", "Redis", "BullMQ", "Prisma"] },
+    { category: t("delivery"), note: t("deliveryNote"), items: ["Docker", "Nginx", "Git", "Stripe", "Paddle", "Cloudinary", "AI SDK"] },
   ]
   return (
     <section id="skills" className="relative scroll-mt-20 px-5 py-24 md:px-8 md:py-32">

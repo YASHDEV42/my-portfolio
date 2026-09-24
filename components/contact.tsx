@@ -33,7 +33,7 @@ export function Contact() {
         </Reveal>
 
         <Reveal>
-          <h2 className="max-w-4xl font-serif text-[clamp(2.5rem,7vw,5.5rem)] font-medium leading-[0.98] tracking-[-0.02em] text-balance">
+          <h2 className="display-heading max-w-4xl font-serif text-[clamp(2.5rem,7vw,5.5rem)] font-medium tracking-[-0.02em] text-balance">
             {t("headingBefore")} <span className="italic text-accent">{t("headingAccent")}</span>{t("headingAfter")}
           </h2>
         </Reveal>
@@ -48,15 +48,15 @@ export function Contact() {
           <Magnetic>
             <a
               href={`mailto:${site.email}`}
-              className="group inline-flex items-center gap-3 rounded-full bg-ink px-7 py-4 text-lg font-medium text-paper transition-transform"
+              className="group inline-flex max-w-full items-center gap-3 rounded-full bg-ink px-5 py-4 text-base font-medium leading-snug text-paper transition-transform sm:px-7 sm:text-lg"
             >
               <bdi>{site.email}</bdi>
-              <ArrowUpRight className="h-5 w-5 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+              <ArrowUpRight className="h-5 w-5 flex-none transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
             </a>
           </Magnetic>
           <button
             onClick={copyEmail}
-            className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-4 font-medium text-ink transition-colors hover:border-ink/50"
+            className="inline-flex items-center gap-2 rounded-full border border-ink/20 px-5 py-4 font-medium leading-snug text-ink transition-colors hover:border-ink/50"
             aria-label={t("copyEmail")}
           >
             {copied ? <Check className="h-4 w-4 text-accent" /> : <Copy className="h-4 w-4" />}
@@ -75,7 +75,7 @@ export function Contact() {
                   rel="noopener noreferrer"
                   className="group flex items-center justify-between border-b border-ink/10 py-4 transition-colors hover:border-ink/40"
                 >
-                  <span className="flex items-baseline gap-3">
+                  <span className="flex min-w-0 flex-wrap items-baseline gap-x-3 gap-y-1">
                     <span className="font-serif text-xl font-semibold">{s.label}</span>
                     <span className="text-sm text-ink/50" dir="ltr">{s.label === "YouTube" ? t("channel") : s.handle}</span>
                   </span>

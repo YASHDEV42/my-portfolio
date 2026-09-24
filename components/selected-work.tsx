@@ -92,11 +92,11 @@ function ProjectCard({ project, wide }: { project: Project; wide: boolean }) {
           />
           <div className="absolute inset-0 bg-gradient-to-t from-card via-card/10 to-transparent" />
           <div className="absolute start-4 top-4 flex flex-wrap gap-2">
-            <span className="rounded-full bg-background/70 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+            <span className="rounded-full bg-background/70 px-3 py-1 text-xs font-medium leading-relaxed backdrop-blur-sm">
               {project.category}
             </span>
             {project.videos?.length && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-background/70 px-3 py-1 text-xs font-medium backdrop-blur-sm">
+              <span className="inline-flex items-center gap-1.5 rounded-full bg-background/70 px-3 py-1 text-xs font-medium leading-relaxed backdrop-blur-sm">
                 <Play className="h-3 w-3 fill-current" aria-hidden="true" />
                 {project.videos.length > 1 ? t("demoVideos") : t("demoVideo")}
               </span>
@@ -114,13 +114,13 @@ function ProjectCard({ project, wide }: { project: Project; wide: boolean }) {
 
         <div className="flex flex-1 flex-col p-6">
           <div className="flex items-baseline justify-between gap-4">
-            <h3 className="font-serif text-2xl font-semibold tracking-tight">{project.name}</h3>
+            <h3 className="font-serif text-2xl font-semibold leading-tight tracking-tight">{project.name}</h3>
             <span className="label text-muted-foreground">{format.number(Number(project.year), { useGrouping: false })}</span>
           </div>
           <p className="mt-2 text-muted-foreground text-pretty">{project.tagline}</p>
           <div className="mt-auto flex flex-wrap gap-2 pt-6">
             {project.stack.map((s) => (
-              <span key={s} className="rounded-full border border-border px-2.5 py-1 text-xs text-muted-foreground">
+              <span key={s} className="rounded-full border border-border px-2.5 py-1 text-xs leading-relaxed text-muted-foreground">
                 {s}
               </span>
             ))}

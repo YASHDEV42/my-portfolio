@@ -8,13 +8,12 @@ import {
   useTransform,
 } from "motion/react";
 import { ArrowDownRight, Download } from "lucide-react";
-import { useLocale, useTranslations } from "next-intl";
+import { useTranslations } from "next-intl";
 import { site } from "@/lib/site";
 import { Magnetic, RevealLines } from "./motion-primitives";
 
 export function Hero() {
   const t = useTranslations("Hero");
-  const locale = useLocale();
   const headline = [t("headline1"), t("headline2"), t("headline3"), t("headline4")];
   const stats = [{ value: t("stat1Value"), label: t("stat1Label") }, { value: t("stat2Value"), label: t("stat2Label") }, { value: t("stat3Value"), label: t("stat3Label") }];
   const reduce = useReducedMotion();
@@ -88,12 +87,11 @@ export function Hero() {
           )}
         </motion.div>
 
-        <h1 className="hero-headline font-serif text-[clamp(2.75rem,9vw,7.5rem)] font-medium leading-[0.92] tracking-[-0.02em] text-balance">
+        <h1 className="hero-headline font-serif text-[clamp(2.75rem,9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance">
           <RevealLines
             lines={headline}
             accentIndex={1}
             lineWrapperClassName="hero-reveal-line"
-            unmasked={locale === "ar"}
           />
         </h1>
 

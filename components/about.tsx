@@ -54,7 +54,7 @@ export function About() {
           {/* Bio + enjoys */}
           <div>
             <Reveal>
-              <h2 className="font-serif text-[clamp(1.75rem,3.5vw,2.75rem)] font-medium leading-[1.08] tracking-[-0.01em] text-balance">
+              <h2 className="display-heading font-serif text-[clamp(1.75rem,3.5vw,2.75rem)] font-medium tracking-[-0.01em] text-balance">
                 {t("heading")}
               </h2>
             </Reveal>

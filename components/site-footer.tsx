@@ -13,7 +13,7 @@ export function SiteFooter() {
           <p className="font-serif text-lg font-semibold">{site.name}</p>
           <p className="mt-1 text-sm text-muted-foreground">{siteT("role")}</p>
         </div>
-        <div className="flex flex-row items-start gap-1 md:items-end">
+        <div className="flex flex-col items-start gap-1 md:items-end">
           <a
             href={`mailto:${site.email}`}
             className="text-sm text-muted-foreground transition-colors hover:text-accent"

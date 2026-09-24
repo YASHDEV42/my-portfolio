@@ -69,7 +69,7 @@ export function ProjectMedia({
               <span className="flex h-16 w-16 items-center justify-center rounded-full bg-accent text-accent-foreground shadow-2xl transition-transform duration-300 group-hover:scale-110">
                 <Play className="ms-1 h-6 w-6 fill-current rtl:rotate-180" aria-hidden="true" />
               </span>
-              <span className="rounded-full bg-background/80 px-4 py-2 text-sm font-medium backdrop-blur-sm">
+              <span className="rounded-full bg-background/80 px-4 py-2 text-sm font-medium leading-relaxed backdrop-blur-sm">
                 {t("play", { label: firstVideo.label })}
               </span>
             </button>
@@ -85,7 +85,7 @@ export function ProjectMedia({
             type="button"
             onClick={() => setActiveVideoId(video.youtubeId)}
             aria-pressed={activeVideoId === video.youtubeId}
-            className={`rounded-full border px-3 py-1.5 text-sm transition-colors ${
+            className={`rounded-full border px-3 py-1.5 text-sm leading-relaxed transition-colors ${
               activeVideoId === video.youtubeId
                 ? "border-accent bg-accent text-accent-foreground"
                 : "border-border text-muted-foreground hover:border-accent hover:text-accent"
