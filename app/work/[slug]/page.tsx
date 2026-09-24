@@ -2,7 +2,7 @@ import type { Metadata } from "next"
 import Image from "next/image"
 import Link from "next/link"
 import { notFound } from "next/navigation"
-import { ArrowLeft, ArrowUpRight, Github } from "lucide-react"
+import { ArrowLeft, ArrowUpRight, CodeXml } from "lucide-react"
 import { projects } from "@/lib/site"
 import { Reveal } from "@/components/motion-primitives"
 import { SiteFooter } from "@/components/site-footer"
@@ -91,7 +91,7 @@ export default async function CaseStudyPage({
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 rounded-full border border-border px-5 py-3 font-medium transition-colors hover:border-accent hover:text-accent"
                   >
-                    <Github className="h-4 w-4" />
+                    <CodeXml className="h-4 w-4" />
                     Source
                   </a>
                 )}
