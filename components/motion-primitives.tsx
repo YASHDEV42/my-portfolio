@@ -51,11 +51,15 @@ export function RevealLines({
   lines,
   className,
   lineClassName,
+  lineWrapperClassName,
+  unmasked = false,
   accentIndex,
 }: {
   lines: string[]
   className?: string
   lineClassName?: string
+  lineWrapperClassName?: string
+  unmasked?: boolean
   accentIndex?: number
 }) {
   const reduce = useReducedMotion()
@@ -63,10 +67,10 @@ export function RevealLines({
   return (
     <span className={className}>
       {lines.map((line, i) => (
-        <span key={i} className="block overflow-hidden">
+        <span key={i} className={`block ${unmasked ? "overflow-visible" : "overflow-hidden"} ${lineWrapperClassName ?? ""}`}>
           <motion.span
             className={`block ${lineClassName ?? ""} ${i === accentIndex ? "text-accent italic" : ""}`}
-            initial={reduce ? false : { y: "110%" }}
+            initial={reduce ? false : { y: unmasked ? "14%" : "110%" }}
             animate={reduce ? {} : { y: 0 }}
             transition={{
               duration: 0.9,

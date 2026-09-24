@@ -54,6 +54,14 @@
     color: var(--foreground);
     font-family: var(--font-sans);
   }
+  [dir="rtl"] body {
+    font-family: var(--font-noto-sans-arabic), var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+    font-feature-settings: "kern";
+  }
+  [dir="rtl"] bdi,
+  [dir="rtl"] [dir="ltr"] {
+    unicode-bidi: isolate;
+  }
   ::selection {
     background-color: var(--accent);
     color: var(--accent-foreground);
@@ -71,6 +79,28 @@
     font-family: var(--font-serif);
     font-optical-sizing: auto;
   }
+  [dir="rtl"] .font-serif {
+    font-family: var(--font-noto-naskh-arabic), var(--font-fraunces), ui-serif, Georgia, serif;
+  }
+  [dir="rtl"] [dir="ltr"],
+  [dir="rtl"] bdi {
+    font-family: var(--font-geist), ui-sans-serif, system-ui, sans-serif;
+  }
+  [dir="rtl"] .font-serif[dir="ltr"] {
+    font-family: var(--font-fraunces), ui-serif, Georgia, serif;
+  }
+  [dir="rtl"] .hero-headline {
+    line-height: 1.16;
+    letter-spacing: 0;
+  }
+  [dir="rtl"] .hero-reveal-line {
+    margin-block: -0.16em -0.2em;
+    padding-block: 0.16em 0.2em;
+  }
+  [dir="rtl"] .hero-headline .italic,
+  [dir="rtl"] h2 .italic {
+    font-style: normal;
+  }
   /* Tracked small-caps "engineering" label */
   .label {
     font-family: var(--font-sans);
@@ -78,6 +108,10 @@
     letter-spacing: 0.18em;
     font-size: 0.72rem;
     font-weight: 500;
+  }
+  [dir="rtl"] .label {
+    text-transform: none;
+    letter-spacing: 0.06em;
   }
   .text-balance {
     text-wrap: balance;

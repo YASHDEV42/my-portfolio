@@ -1,21 +1,30 @@
 "use client"
 
-import { skillGroups, strengths } from "@/lib/site"
+import { useTranslations } from "next-intl"
 import { SectionHeading } from "./section-heading"
 import { Reveal } from "./motion-primitives"
 
 export function Skills() {
+  const t = useTranslations("Skills")
+  const strengths = [1, 2, 3].map((i) => ({ title: t(`strength${i}`), body: t(`strength${i}Body`) }))
+  const skillGroups = [
+    { category: "Frontend", note: t("frontendNote"), items: ["React", "Next.js", "TypeScript", "JavaScript", "HTML", "CSS", "Tailwind CSS"] },
+    { category: "Backend", note: t("backendNote"), items: ["NestJS", "Node.js", "REST", "Real-time / WebSockets"] },
+    { category: "Data", note: t("dataNote"), items: ["MongoDB", "PostgreSQL"] },
+    { category: t("practice"), note: t("practiceNote"), items: [t("cleanCode"), t("performance"), t("rtl"), "Git"] },
+  ]
   return (
-    <section id="skills" className="relative px-5 py-24 md:px-8 md:py-32">
+    <section id="skills" className="relative scroll-mt-20 px-5 py-24 md:px-8 md:py-32">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          index="04 — Capabilities"
-          label="Skills & strengths"
+          index={t("index")}
+          label={t("label")}
           title={
             <>
-              The toolkit, and how I <span className="italic text-accent">use</span> it.
+              {t("titleBefore")} <span className="italic text-accent">{t("titleAccent")}</span> {t("titleAfter")}
             </>
           }
+          intro={t("intro")}
         />
 
         {/* Strengths */}
@@ -41,7 +50,7 @@ export function Skills() {
                   <span className="label text-muted-foreground">{`0${i + 1}`}</span>
                 </div>
                 <p className="mt-2 text-sm leading-relaxed text-muted-foreground text-pretty">{g.note}</p>
-                <ul className="mt-5 flex flex-wrap gap-2">
+                <ul className="mt-5 flex flex-wrap gap-2" dir="ltr">
                   {g.items.map((item) => (
                     <li
                       key={item}

@@ -1,47 +1,90 @@
 "use client"
 
-import { GraduationCap, Briefcase } from "lucide-react"
-import { timeline } from "@/lib/site"
+import { Briefcase, GraduationCap, MapPin } from "lucide-react"
+import { useFormatter, useTranslations } from "next-intl"
 import { SectionHeading } from "./section-heading"
 import { Reveal } from "./motion-primitives"
 
 export function Timeline() {
+  const t = useTranslations("Journey")
+  const format = useFormatter()
+  const monthYear = (year: number, month: number) => format.dateTime(new Date(Date.UTC(year, month - 1, 1)), { year: "numeric", month: "long", timeZone: "UTC" })
+  const year = (value: number) => format.number(value, { useGrouping: false })
+  const timeline: TimelineItem[] = [
+    { period: t("dateRange", { start: monthYear(2026, 6), end: t("present") }), title: t("flyTitle"), org: "FlyRank AI", kind: "work", location: t("flyLocation"), body: t("flyBody") },
+    { period: t("dateRange", { start: year(2023), end: t("present") }), title: t("degree"), org: t("university"), kind: "education", body: t("degreeBody") },
+    { period: t("ongoing"), title: t("independent"), org: t("selfDirected"), kind: "work", body: t("independentBody") },
+  ]
+  const experience = timeline.filter((item) => item.kind === "work")
+  const education = timeline.filter((item) => item.kind === "education")
+
   return (
-    <section id="timeline" className="relative px-5 py-24 md:px-8 md:py-32">
+    <section id="journey" className="relative scroll-mt-20 px-5 py-24 md:px-8 md:py-32">
       <div className="mx-auto max-w-6xl">
         <SectionHeading
-          index="05 — Path"
-          label="Experience & education"
+          index={t("index")}
+          label={t("label")}
           title={
             <>
-              Where I&apos;ve <span className="italic text-accent">studied</span> and built.
+              {t("titleBefore")} <span className="italic text-accent">{t("titleAccent")}</span> {t("titleAfter")}
             </>
           }
+          intro={t("intro")}
         />
 
-        <ol className="relative border-l border-border pl-8 md:pl-10">
-          {timeline.map((item, i) => (
-            <li key={i} className="relative pb-12 last:pb-0">
-              <span
-                className="absolute -left-[calc(2rem+9px)] top-1 flex h-[18px] w-[18px] items-center justify-center rounded-full border border-border bg-card md:-left-[calc(2.5rem+9px)]"
-                aria-hidden="true"
-              >
-                {item.kind === "education" ? (
-                  <GraduationCap className="h-2.5 w-2.5 text-accent" />
-                ) : (
-                  <Briefcase className="h-2.5 w-2.5 text-accent" />
-                )}
-              </span>
-              <Reveal>
-                <span className="label text-muted-foreground">{item.period}</span>
-                <h3 className="mt-2 font-serif text-2xl font-semibold tracking-tight">{item.title}</h3>
-                <p className="mt-1 text-accent">{item.org}</p>
-                <p className="mt-3 max-w-2xl leading-relaxed text-muted-foreground text-pretty">{item.body}</p>
-              </Reveal>
-            </li>
-          ))}
-        </ol>
+        <div className="grid gap-6 lg:grid-cols-2">
+          <JourneyGroup title={t("experience")} icon={Briefcase} items={experience} />
+          <JourneyGroup title={t("education")} icon={GraduationCap} items={education} />
+        </div>
       </div>
     </section>
+  )
+}
+
+type TimelineItem = { period: string; title: string; org: string; kind: "work" | "education"; location?: string; body: string }
+
+function JourneyGroup({
+  title,
+  icon: Icon,
+  items,
+}: {
+  title: string
+  icon: typeof Briefcase
+  items: TimelineItem[]
+}) {
+  return (
+    <div className="rounded-sm border border-border bg-card p-6 md:p-8">
+      <div className="mb-8 flex items-center gap-3">
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-accent text-accent-foreground">
+          <Icon className="h-4 w-4" aria-hidden="true" />
+        </span>
+        <h3 className="font-serif text-2xl font-semibold tracking-tight">{title}</h3>
+      </div>
+
+      <ol className="relative border-s border-border ps-8">
+        {items.map((item) => (
+          <li key={`${item.org}-${item.title}`} className="relative pb-10 last:pb-0">
+            <span
+              className="absolute -start-[calc(2rem+5px)] top-1 h-2.5 w-2.5 rounded-full border border-accent bg-card"
+              aria-hidden="true"
+            />
+            <Reveal>
+              <span className="label text-muted-foreground">{item.period}</span>
+              <h4 className="mt-2 font-serif text-2xl font-semibold tracking-tight">{item.title}</h4>
+              <div className="mt-1 flex flex-wrap items-center gap-x-3 gap-y-1 text-accent">
+                <span>{item.org}</span>
+                {item.location && (
+                  <span className="inline-flex items-center gap-1 text-sm text-muted-foreground">
+                    <MapPin className="h-3.5 w-3.5" aria-hidden="true" />
+                    {item.location}
+                  </span>
+                )}
+              </div>
+              <p className="mt-3 leading-relaxed text-muted-foreground text-pretty">{item.body}</p>
+            </Reveal>
+          </li>
+        ))}
+      </ol>
+    </div>
   )
 }
