@@ -37,7 +37,7 @@ export function Process() {
         <div ref={ref} className="relative ps-10 md:ps-0">
           {/* Spine (mobile: left, desktop: center) */}
           <div
-            className="absolute start-[7px] top-2 h-full w-px bg-border md:start-1/2 md:-translate-x-1/2 rtl:md:translate-x-1/2"
+            className="absolute start-[7px] top-2 h-full w-px bg-border md:start-auto md:left-1/2 md:-translate-x-1/2"
             aria-hidden="true"
           >
             <motion.div
@@ -54,7 +54,7 @@ export function Process() {
               >
                 {/* node */}
                 <span
-                  className="absolute start-[37px] top-1.5 z-10 flex h-4 w-4 items-center justify-center rounded-full border border-accent bg-background md:start-1/2 md:-translate-x-1/2 rtl:md:translate-x-1/2"
+                  className="absolute -start-10 top-1.5 z-10 flex h-4 w-4 items-center justify-center rounded-full border border-accent bg-background md:start-auto md:left-1/2 md:-translate-x-1/2"
                   aria-hidden="true"
                 >
                   <span className="h-1.5 w-1.5 rounded-full bg-accent" />
@@ -63,13 +63,13 @@ export function Process() {
                 <div
                   className={
                     i % 2 === 0
-                      ? "md:col-start-1 md:pb-12 md:text-end rtl:md:col-start-2"
-                      : "md:col-start-2 md:pb-12 rtl:md:col-start-1"
+                      ? "md:col-start-1 md:pb-12 md:text-end"
+                      : "md:col-start-2 md:pb-12"
                   }
                 >
                   <Reveal>
                     <div
-                      className={`flex items-baseline gap-3 ${i % 2 === 0 ? "md:justify-end rtl:md:justify-start" : "rtl:md:justify-end"}`}
+                      className={`flex items-baseline gap-3 ${i % 2 === 0 ? "md:justify-end" : ""}`}
                     >
                       <span className="font-serif text-4xl font-semibold text-accent/80">
                         {p.step}

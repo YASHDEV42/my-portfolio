@@ -11,11 +11,11 @@ export const site = {
 
 export const socials = [
   { label: "GitHub", handle: "YASHDEV42", href: "https://github.com/YASHDEV42" },
+  { label: "LinkedIn", handle: "yahya-chanat-827909223", href: "https://www.linkedin.com/in/yahya-chanat-827909223/" },
   { label: "Instagram", handle: "@yahya.chanat", href: "https://www.instagram.com/yahya.chanat/" },
   { label: "Facebook", handle: "yahya.shannat", href: "https://www.facebook.com/yahya.shannat" },
   { label: "YouTube", handle: "Channel", href: "https://www.youtube.com/channel/UC2tvTb_DX35TLUCTj9m1byg" },
   { label: "WhatsApp", handle: "+90 536 885 3122", href: "https://wa.me/905368853122" },
-  // { label: "LinkedIn", handle: "[Add LinkedIn handle]", href: "[Add LinkedIn URL]" },
 ]
 
 export const about = {
