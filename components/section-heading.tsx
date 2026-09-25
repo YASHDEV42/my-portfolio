@@ -1,5 +1,5 @@
-import type { ReactNode } from "react"
-import { Reveal } from "./motion-primitives"
+import type { ReactNode } from "react";
+import { Reveal } from "./motion-primitives";
 
 export function SectionHeading({
   index,
@@ -8,11 +8,11 @@ export function SectionHeading({
   intro,
   className,
 }: {
-  index: string
-  label: string
-  title: ReactNode
-  intro?: string
-  className?: string
+  index: string;
+  label: string;
+  title: ReactNode;
+  intro?: string;
+  className?: string;
 }) {
   return (
     <div className={`mb-14 md:mb-20 ${className ?? ""}`}>
@@ -28,11 +28,11 @@ export function SectionHeading({
           {title}
         </h2>
       </Reveal>
-      {intro && (
-        <Reveal delay={0.1}>
-          <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty">{intro}</p>
-        </Reveal>
-      )}
+      {/* {intro && ( */}
+      {/*   <Reveal delay={0.1}> */}
+      {/*     <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty">{intro}</p> */}
+      {/*   </Reveal> */}
+      {/* )} */}
     </div>
-  )
+  );
 }
