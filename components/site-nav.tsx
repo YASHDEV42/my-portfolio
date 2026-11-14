@@ -170,11 +170,11 @@ export function SiteNav() {
       >
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
           <a href="#top" className="group flex items-center gap-2" aria-label={t("home")}>
-            <span className="font-serif text-xl font-semibold tracking-tight">Yahya Chanat</span>
+            <span className="whitespace-nowrap font-serif text-xl font-semibold tracking-tight">Yahya Chanat</span>
             <span className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-150" />
           </a>
 
-          <ul className="hidden items-center gap-8 md:flex">
+          <ul className="hidden items-center gap-8 lg:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <a
@@ -187,11 +187,11 @@ export function SiteNav() {
             ))}
           </ul>
 
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <Magnetic>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
@@ -204,7 +204,7 @@ export function SiteNav() {
           </div>
 
           <button
-            className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+            className="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label={open ? t("closeMenu") : t("openMenu")}
             aria-expanded={open}
@@ -240,7 +240,7 @@ export function SiteNav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col justify-center bg-background px-6 md:hidden"
+            className="fixed inset-0 z-40 flex flex-col justify-center bg-background px-6 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

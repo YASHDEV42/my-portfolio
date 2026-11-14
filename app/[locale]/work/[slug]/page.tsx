@@ -38,7 +38,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ loca
   if (!project) notFound()
   const next = projects[(projects.findIndex((item) => item.slug === slug) + 1) % projects.length]
 
-  return <><main className="relative px-5 pb-24 pt-28 md:px-8 md:pt-32"><div className="absolute end-5 top-5 z-50 md:end-8 md:top-6"><LanguageSelector /></div><article className="mx-auto max-w-5xl">
+  return <><main id="main" className="relative px-5 pb-24 pt-28 md:px-8 md:pt-32"><div className="absolute end-5 top-5 z-50 md:end-8 md:top-6"><LanguageSelector /></div><article className="mx-auto max-w-5xl">
     <Reveal><Link href="/#work" className="group inline-flex items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-accent"><ArrowLeft className="h-4 w-4 transition-transform group-hover:-translate-x-0.5 rtl:rotate-180 rtl:group-hover:translate-x-0.5" />{t("CaseStudy.allWork")}</Link></Reveal>
     <header className="mt-8 border-b border-border pb-10">
       <Reveal><div className="flex flex-wrap items-center gap-3"><span className="rounded-full bg-accent px-3 py-1 text-xs font-medium text-accent-foreground">{project.category}</span><span className="label text-muted-foreground" dir="ltr">{project.year}</span></div></Reveal>

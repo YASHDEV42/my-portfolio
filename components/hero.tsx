@@ -11,7 +11,7 @@ import { ArrowDownRight, Download } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { site } from "@/lib/site";
 import { HeroGoldenCanvas } from "./hero-golden-canvas";
-import { Magnetic, RevealLines } from "./motion-primitives";
+import { INSTANT, Magnetic, RevealLines } from "./motion-primitives";
 
 export function Hero() {
   const t = useTranslations("Hero");
@@ -69,11 +69,11 @@ export function Hero() {
           />
         </h1>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
+        <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <motion.dl
-            initial={reduce ? false : { opacity: 0 }}
+            initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
+            transition={reduce ? INSTANT : { duration: 0.8, delay: 0.8 }}
             className="grid grid-cols-3 gap-4 border-t border-border pt-6 sm:gap-6"
           >
             {stats.map((s) => (
@@ -89,9 +89,9 @@ export function Hero() {
           </motion.dl>
 
           <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
+            initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.62 }}
+            transition={reduce ? INSTANT : { duration: 0.7, delay: 0.62 }}
             className="flex flex-wrap items-center gap-4"
           >
             <Magnetic>
@@ -123,9 +123,9 @@ export function Hero() {
         aria-label={t("scrollToWork")}
         style={{ opacity: fade }}
         className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-muted-foreground md:flex"
-        initial={reduce ? false : { opacity: 0 }}
+        initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.1 }}
+        transition={reduce ? INSTANT : { delay: 1.1 }}
       >
         <span className="label">{t("scroll")}</span>
         <motion.span

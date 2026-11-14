@@ -68,10 +68,11 @@
     color: var(--accent-foreground);
   }
   /* Visible focus states for keyboard navigation */
+  /* The outline follows each element's own radius; forcing one here used to
+     square off pills and circles while they were focused. */
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 2px;
   }
 }
 

@@ -12,5 +12,5 @@ import { SiteFooter } from "@/components/site-footer"
 export default async function HomePage({ params }: { params: Promise<{ locale: string }> }) {
   const { locale } = await params
   setRequestLocale(locale)
-  return <><SiteNav /><main><Hero /><SelectedWork /><About /><Process /><Skills /><Timeline /><Contact /></main><SiteFooter /></>
+  return <><SiteNav /><main id="main"><Hero /><SelectedWork /><About /><Process /><Skills /><Timeline /><Contact /></main><SiteFooter /></>
 }

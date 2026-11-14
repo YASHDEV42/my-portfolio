@@ -12,6 +12,10 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  images: {
+    // AVIF where the browser supports it, WebP otherwise.
+    formats: ["image/avif", "image/webp"],
+  },
   async headers() {
     return [{ source: "/(.*)", headers: securityHeaders }]
   },

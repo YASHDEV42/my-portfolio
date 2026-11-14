@@ -9,9 +9,20 @@ import {
   useTransform,
   type MotionValue,
 } from "motion/react"
+import { usePrefersReducedMotion } from "./use-media-query"
 
-/* Scroll-triggered reveal. Falls back to a plain, instant element when the
-   user prefers reduced motion. */
+const EASE_OUT = [0.22, 1, 0.36, 1] as const
+/* Used under prefers-reduced-motion: same end state, no movement. */
+export const INSTANT = { duration: 0 } as const
+
+/* Scroll-triggered reveal.
+
+   There is deliberately one render path. The server can't know the visitor's
+   motion preference, so branching the markup on it (a plain element for
+   reduced motion, a motion element otherwise) makes the client disagree with
+   the server HTML; React keeps the server's hidden inline styles and the
+   content never appears. Reduced motion only changes the transition: the
+   element still starts hidden and is shown instantly once it is in view. */
 export function Reveal({
   children,
   delay = 0,
@@ -28,18 +39,13 @@ export function Reveal({
   const reduce = useReducedMotion()
   const MotionTag = motion[as] as typeof motion.div
 
-  if (reduce) {
-    const Tag = as
-    return <Tag className={className}>{children}</Tag>
-  }
-
   return (
     <MotionTag
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.7, delay, ease: [0.22, 1, 0.36, 1] }}
+      transition={reduce ? INSTANT : { duration: 0.7, delay, ease: EASE_OUT }}
     >
       {children}
     </MotionTag>
@@ -68,13 +74,9 @@ export function RevealLines({
         <span key={i} className={`reveal-line-mask block ${lineWrapperClassName ?? ""}`}>
           <motion.span
             className={`block ${lineClassName ?? ""} ${i === accentIndex ? "text-accent italic" : ""}`}
-            initial={reduce ? false : { y: "145%" }}
-            animate={reduce ? {} : { y: 0 }}
-            transition={{
-              duration: 0.9,
-              delay: 0.15 + i * 0.09,
-              ease: [0.22, 1, 0.36, 1],
-            }}
+            initial={{ y: "145%" }}
+            animate={{ y: 0 }}
+            transition={reduce ? INSTANT : { duration: 0.9, delay: 0.15 + i * 0.09, ease: EASE_OUT }}
           >
             {line}
           </motion.span>
@@ -133,7 +135,8 @@ export function useParallax(range = 60): {
   y: MotionValue<number>
 } {
   const ref = useRef<HTMLDivElement>(null)
-  const reduce = useReducedMotion()
+  // Hydration-safe: this value ends up in the server-rendered style.
+  const reduce = usePrefersReducedMotion()
   const { scrollYProgress } = useScroll({
     target: ref,
     offset: ["start end", "end start"],
