@@ -112,15 +112,17 @@ function ProjectCard({ project }: { project: Project }) {
         </div>
 
         <div className="flex flex-1 flex-col p-5 sm:p-6">
-          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground">
-            <span className="label">{project.category}</span>
-            {project.videos?.length && (
-              <span className="label inline-flex items-center gap-1.5">
-                <Play className="h-2.5 w-2.5 fill-current rtl:rotate-180" aria-hidden="true" />
-                {project.videos.length > 1 ? t("demoVideos") : t("demoVideo")}
-              </span>
-            )}
-            <span className="label ms-auto">{format.number(Number(project.year), { useGrouping: false })}</span>
+          <div className="flex items-start justify-between gap-4 text-muted-foreground">
+            <div className="flex min-w-0 flex-wrap items-center gap-x-4 gap-y-1">
+              <span className="label">{project.category}</span>
+              {project.videos?.length && (
+                <span className="label inline-flex items-center gap-1.5">
+                  <Play className="h-2.5 w-2.5 fill-current rtl:rotate-180" aria-hidden="true" />
+                  {project.videos.length > 1 ? t("demoVideos") : t("demoVideo")}
+                </span>
+              )}
+            </div>
+            <span className="label shrink-0">{format.number(Number(project.year), { useGrouping: false })}</span>
           </div>
           <h3 className="mt-3 font-serif text-2xl font-semibold leading-tight tracking-tight">{project.name}</h3>
           <p className="mt-2 text-muted-foreground text-pretty">{project.tagline}</p>

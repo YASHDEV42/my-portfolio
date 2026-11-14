@@ -52,7 +52,7 @@ export default async function LocaleLayout({ children, params }: { children: Rea
       <body className="grain antialiased">
         <a
           href="#main"
-          className="sr-only rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground focus-visible:not-sr-only focus-visible:fixed focus-visible:start-4 focus-visible:top-4 focus-visible:z-[60]"
+          className="fixed start-4 top-4 z-[60] -translate-y-[200%] rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-transform focus-visible:translate-y-0"
         >
           {t("skipToContent")}
         </a>

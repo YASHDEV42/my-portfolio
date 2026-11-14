@@ -355,21 +355,22 @@ export function HeroGoldenCanvas({ anchorRef }: { anchorRef?: RefObject<HTMLElem
       Math.abs(target.x - offset.x) < 0.05 &&
       Math.abs(target.y - offset.y) < 0.05
 
+    // Time is taken from the rAF timestamps themselves, so the intro runs on
+    // the wall clock no matter how much other work shares the frame.
     const tick = (now: number) => {
-      raf = 0
-      const delta = Math.min(now - last, 64)
+      const delta = last ? Math.min(now - last, 64) : 16
       last = now
       elapsed += delta
       const ease = 1 - Math.exp(-delta / 220)
       offset.x += (target.x - offset.x) * ease
       offset.y += (target.y - offset.y) * ease
       paint()
-      if (!settled()) wake()
+      raf = settled() ? 0 : requestAnimationFrame(tick)
     }
 
     const wake = () => {
       if (raf || reduce || !inView || document.hidden) return
-      last = performance.now()
+      last = 0 // time spent asleep doesn't count
       raf = requestAnimationFrame(tick)
     }
 
