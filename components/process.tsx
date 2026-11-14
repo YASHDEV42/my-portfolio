@@ -31,7 +31,6 @@ export function Process() {
               {t("titleBefore")} <span className="italic text-accent">{t("titleAccent")}</span> {t("titleAfter")}
             </>
           }
-          intro={t("intro")}
         />
 
         <div ref={ref} className="relative ps-10 md:ps-0">

@@ -5,13 +5,11 @@ export function SectionHeading({
   index,
   label,
   title,
-  intro,
   className,
 }: {
   index: string;
   label: string;
   title: ReactNode;
-  intro?: string;
   className?: string;
 }) {
   return (
@@ -28,11 +26,6 @@ export function SectionHeading({
           {title}
         </h2>
       </Reveal>
-      {/* {intro && ( */}
-      {/*   <Reveal delay={0.1}> */}
-      {/*     <p className="mt-5 max-w-xl text-lg leading-relaxed text-muted-foreground text-pretty">{intro}</p> */}
-      {/*   </Reveal> */}
-      {/* )} */}
     </div>
   );
 }

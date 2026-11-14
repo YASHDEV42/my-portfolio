@@ -29,7 +29,6 @@ export function SelectedWork() {
               {t("Work.titleBefore")} <span className="italic text-accent">{t("Work.titleAccent")}</span> {t("Work.titleAfter")}
             </>
           }
-          intro={t("Work.intro")}
         />
 
         <div className="grid gap-6 md:grid-cols-2 md:gap-8">
