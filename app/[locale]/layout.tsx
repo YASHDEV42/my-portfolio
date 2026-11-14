@@ -11,8 +11,13 @@ import "../globals.css"
 
 const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", axes: ["opsz"] })
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" })
-const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ["arabic"], variable: "--font-noto-naskh-arabic", display: "swap", weight: "variable" })
-const notoSansArabic = Noto_Sans_Arabic({ subsets: ["arabic"], variable: "--font-noto-sans-arabic", display: "swap", weight: "variable" })
+// The Arabic faces are not preloaded. next/font preloads per layout, and this
+// layout serves every locale, so preloading them made en and tr download
+// ~260 KB of type they never render. Without the preload only /ar fetches
+// them (their font-family is applied under dir="rtl" alone), starting as soon
+// as the stylesheet is parsed instead of from the HTML head.
+const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ["arabic"], variable: "--font-noto-naskh-arabic", display: "swap", weight: "variable", preload: false })
+const notoSansArabic = Noto_Sans_Arabic({ subsets: ["arabic"], variable: "--font-noto-sans-arabic", display: "swap", weight: "variable", preload: false })
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
