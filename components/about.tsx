@@ -1,5 +1,6 @@
 "use client"
 
+import Image from "next/image"
 import { motion } from "motion/react"
 import { Check, ImageIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -31,8 +32,13 @@ export function About() {
               <motion.div style={{ y }} className="relative">
                 <div className="relative aspect-[4/5] overflow-hidden rounded-lg border border-ink/15 bg-ink/5">
                   {about.portrait ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={about.portrait} alt={t("portraitAlt")} className="h-full w-full object-cover" />
+                    <Image
+                      src={about.portrait}
+                      alt={t("portraitAlt")}
+                      fill
+                      sizes="(min-width: 1216px) 465px, (min-width: 768px) 40vw, calc(100vw - 40px)"
+                      className="object-cover"
+                    />
                   ) : (
                     <div className="flex h-full w-full flex-col items-center justify-center gap-3 p-6 text-center">
                       <ImageIcon className="h-8 w-8 text-ink/40" strokeWidth={1.5} />

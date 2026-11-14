@@ -10,6 +10,7 @@ import {
 import { ArrowDownRight, Download } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { site } from "@/lib/site";
+import { HeroGoldenCanvas } from "./hero-golden-canvas";
 import { Magnetic, RevealLines } from "./motion-primitives";
 
 export function Hero() {
@@ -30,6 +31,7 @@ export function Hero() {
 
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -49,28 +51,19 @@ export function Hero() {
       ref={ref}
       id="top"
       className="relative flex min-h-svh scroll-mt-20 flex-col justify-center overflow-hidden px-5 pb-16 pt-28 md:px-8"
-      style={{
-        background:
-          "radial-gradient(560px circle at var(--mx,30%) var(--my,20%), color-mix(in oklch, var(--accent) 12%, transparent), transparent 60%)",
-      }}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-          maskImage:
-            "radial-gradient(ellipse at center, black 30%, transparent 75%)",
-        }}
-      />
+      <HeroGoldenCanvas anchorRef={headlineRef} />
 
       <motion.div
         style={{ y: textY, opacity: fade }}
         className="relative mx-auto w-full max-w-6xl"
       >
-        <h1 className="hero-headline font-serif text-[clamp(2.75rem,9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance">
+        {/* The floor of the clamp is 2.75rem from 375px up and shrinks with the
+            viewport below that, so the longest word (Turkish) still fits at 320px. */}
+        <h1
+          ref={headlineRef}
+          className="hero-headline font-serif text-[clamp(min(2.75rem,11.75vw),9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance"
+        >
           <RevealLines
             lines={headline}
             accentIndex={1}
@@ -78,16 +71,13 @@ export function Hero() {
           />
         </h1>
 
-        <div className="mt-14 grid gap-8 md:grid-cols-[minmax(0,1fr)_auto] md:items-end">
-          <motion.dl
-            initial={reduce ? false : { opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-3 gap-4 border-t border-border pt-6 sm:gap-6"
-          >
+        <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
+          <dl className="hero-fade grid grid-cols-3 gap-4 border-t border-border pt-6 sm:gap-6">
+            {/* Titles are 1.5rem from 375px up and shrink below that, so the
+                three columns never run into each other on narrow phones. */}
             {stats.map((s) => (
               <div key={s.label}>
-                <dt className="font-serif text-2xl font-semibold md:text-3xl">
+                <dt className="font-serif text-[clamp(1.125rem,10vw_-_0.84375rem,1.5rem)]/[calc(2/1.5)] font-semibold md:text-3xl">
                   {s.value}
                 </dt>
                 <dd className="mt-1 text-sm text-muted-foreground">
@@ -95,14 +85,9 @@ export function Hero() {
                 </dd>
               </div>
             ))}
-          </motion.dl>
+          </dl>
 
-          <motion.div
-            initial={reduce ? false : { opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.62 }}
-            className="flex flex-wrap items-center gap-4"
-          >
+          <div className="hero-rise flex flex-wrap items-center gap-4">
             <Magnetic>
               <a
                 href="#work"
@@ -123,26 +108,27 @@ export function Hero() {
                 {t("downloadCv")}
               </a>
             </Magnetic>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
+      {/* The scroll-linked fade lives on the link; the entrance animation on
+          the inner span, so the two never compete for the same property. */}
       <motion.a
         href="#work"
         aria-label={t("scrollToWork")}
         style={{ opacity: fade }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-muted-foreground md:flex"
-        initial={reduce ? false : { opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.1 }}
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-muted-foreground md:block"
       >
-        <span className="label">{t("scroll")}</span>
-        <motion.span
-          animate={reduce ? {} : { y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-        >
-          <ArrowDownRight className="h-4 w-4" />
-        </motion.span>
+        <span className="hero-hint flex items-center gap-2">
+          <span className="label">{t("scroll")}</span>
+          <motion.span
+            animate={reduce ? {} : { y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          >
+            <ArrowDownRight className="h-4 w-4" />
+          </motion.span>
+        </span>
       </motion.a>
     </section>
   );

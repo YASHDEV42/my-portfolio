@@ -140,6 +140,9 @@ export function SiteNav() {
   ]
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const mobileMenuId = useId()
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 })
 
@@ -157,6 +160,45 @@ export function SiteNav() {
     }
   }, [open])
 
+  // While the mobile menu is open it behaves as a modal: focus moves into it,
+  // Tab cycles between the toggle and the menu's controls, and Escape closes
+  // it and hands focus back to the toggle.
+  useEffect(() => {
+    const menu = menuRef.current
+    const toggle = toggleRef.current
+    if (!open || !menu || !toggle) return
+
+    menu.querySelector<HTMLElement>("a[href]")?.focus({ preventScroll: true })
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        // An open language list closes itself first; the next Escape closes the menu.
+        if (menu.querySelector("[role='menu']")) return
+        event.preventDefault()
+        setOpen(false)
+        toggle.focus()
+        return
+      }
+      if (event.key !== "Tab") return
+      const items = [toggle, ...menu.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")]
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement as HTMLElement | null
+      if (!active || !items.includes(active)) {
+        event.preventDefault()
+        first.focus()
+      } else if (event.shiftKey && active === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
+  }, [open])
+
   return (
     <>
       <header
@@ -170,11 +212,11 @@ export function SiteNav() {
       >
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-5 py-4 md:px-8">
           <a href="#top" className="group flex items-center gap-2" aria-label={t("home")}>
-            <span className="font-serif text-xl font-semibold tracking-tight">Yahya Chanat</span>
+            <span className="whitespace-nowrap font-serif text-xl font-semibold tracking-tight">Yahya Chanat</span>
             <span className="h-1.5 w-1.5 rounded-full bg-accent transition-transform duration-300 group-hover:scale-150" />
           </a>
 
-          <ul className="hidden items-center gap-8 md:flex">
+          <ul className="hidden items-center gap-8 lg:flex">
             {links.map((l) => (
               <li key={l.href}>
                 <a
@@ -187,11 +229,11 @@ export function SiteNav() {
             ))}
           </ul>
 
-          <div className="hidden items-center gap-3 md:flex">
+          <div className="hidden items-center gap-3 lg:flex">
             <Magnetic>
               <a
                 href="#contact"
-                className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
+                className="inline-flex items-center gap-2 whitespace-nowrap rounded-full border border-border bg-card px-4 py-2 text-sm font-medium transition-colors hover:border-accent hover:text-accent"
               >
                 <span className="relative flex h-2 w-2">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-accent opacity-75" />
@@ -204,10 +246,13 @@ export function SiteNav() {
           </div>
 
           <button
-            className="relative z-50 flex h-10 w-10 items-center justify-center md:hidden"
+            ref={toggleRef}
+            type="button"
+            className="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label={open ? t("closeMenu") : t("openMenu")}
             aria-expanded={open}
+            aria-controls={mobileMenuId}
           >
             <span className="sr-only">{open ? t("closeMenu") : t("openMenu")}</span>
             <div className="relative h-4 w-6">
@@ -240,7 +285,12 @@ export function SiteNav() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="fixed inset-0 z-40 flex flex-col justify-center bg-background px-6 md:hidden"
+            ref={menuRef}
+            id={mobileMenuId}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("menu")}
+            className="fixed inset-0 z-40 flex flex-col justify-center bg-background px-6 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}

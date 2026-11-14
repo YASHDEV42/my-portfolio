@@ -24,7 +24,6 @@ export function Skills() {
               {t("titleBefore")} <span className="italic text-accent">{t("titleAccent")}</span> {t("titleAfter")}
             </>
           }
-          intro={t("intro")}
         />
 
         {/* Strengths */}

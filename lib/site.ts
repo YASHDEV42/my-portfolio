@@ -59,11 +59,37 @@ export type Project = {
   repo?: string;
   repoPrivate?: boolean;
   videos?: ProjectVideo[];
+  /** What the project card shows in its frame. Defaults to `image`. */
+  preview?: ProjectPreview;
   stack: string[];
   problem: string;
   contribution: string;
   decisions: string[];
   outcome: string;
+};
+
+/**
+ * Card media. `image` uses `Project.image`. `video` is a short muted loop
+ * served from /public (poster falls back to `Project.image`). `component`
+ * renders an entry of the registry in components/project-previews.
+ *
+ * A video's `src` is either one file or a list of sources in order of
+ * preference; the browser plays the first one it supports:
+ *
+ *   src: [
+ *     { src: "/video/yshai.webm", type: "video/webm" },
+ *     { src: "/video/yshai.mp4", type: "video/mp4" },
+ *   ]
+ */
+export type ProjectPreview =
+  | { type: "image" }
+  | { type: "video"; src: string | PreviewVideoSource[]; poster?: string }
+  | { type: "component"; id: string };
+
+export type PreviewVideoSource = {
+  src: string;
+  /** MIME type, e.g. "video/webm" or "video/mp4". */
+  type: string;
 };
 
 export type ProjectVideo = {
@@ -117,6 +143,7 @@ const projects: ProjectSource[] = [
     image: "/img/project-2.png",
     live: "https://yashchat-two.vercel.app/",
     repo: "https://github.com/YASHDEV42/YASHCHAT",
+    preview: { type: "component", id: "chat-realtime" },
     stack: ["Next.js", "Express.js", "Socket.io", "MongoDB", "JWT"],
   },
   {

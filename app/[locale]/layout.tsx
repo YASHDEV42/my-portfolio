@@ -6,12 +6,18 @@ import { NextIntlClientProvider } from "next-intl"
 import { notFound } from "next/navigation"
 import { routing } from "@/i18n/routing"
 import { site } from "@/lib/site"
+import { MotionProvider } from "@/components/motion-provider"
 import "../globals.css"
 
-const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", axes: ["opsz", "SOFT", "WONK"] })
+const fraunces = Fraunces({ subsets: ["latin"], variable: "--font-fraunces", display: "swap", axes: ["opsz"] })
 const geist = Geist({ subsets: ["latin"], variable: "--font-geist", display: "swap" })
-const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ["arabic"], variable: "--font-noto-naskh-arabic", display: "swap", weight: "variable" })
-const notoSansArabic = Noto_Sans_Arabic({ subsets: ["arabic"], variable: "--font-noto-sans-arabic", display: "swap", weight: "variable" })
+// The Arabic faces are not preloaded. next/font preloads per layout, and this
+// layout serves every locale, so preloading them made en and tr download
+// ~260 KB of type they never render. Without the preload only /ar fetches
+// them (their font-family is applied under dir="rtl" alone), starting as soon
+// as the stylesheet is parsed instead of from the HTML head.
+const notoNaskhArabic = Noto_Naskh_Arabic({ subsets: ["arabic"], variable: "--font-noto-naskh-arabic", display: "swap", weight: "variable", preload: false })
+const notoSansArabic = Noto_Sans_Arabic({ subsets: ["arabic"], variable: "--font-noto-sans-arabic", display: "swap", weight: "variable", preload: false })
 
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }))
@@ -35,19 +41,30 @@ export async function generateMetadata({ params }: { params: Promise<{ locale: s
   }
 }
 
-export const viewport: Viewport = { themeColor: "#201f1d", colorScheme: "dark", width: "device-width", initialScale: 1 }
+export const viewport: Viewport = { themeColor: "#13100d", colorScheme: "dark", width: "device-width", initialScale: 1 }
 
 export default async function LocaleLayout({ children, params }: { children: React.ReactNode; params: Promise<{ locale: string }> }) {
   const { locale } = await params
   if (!hasLocale(routing.locales, locale)) notFound()
   setRequestLocale(locale)
+  const t = await getTranslations({ locale, namespace: "Navigation" })
   return (
     <html
       lang={locale}
       dir={locale === "ar" ? "rtl" : "ltr"}
       className={`${fraunces.variable} ${geist.variable} ${locale === "ar" ? `${notoNaskhArabic.variable} ${notoSansArabic.variable}` : ""} bg-background`}
     >
-      <body className="grain antialiased"><NextIntlClientProvider>{children}</NextIntlClientProvider></body>
+      <body className="grain antialiased">
+        <a
+          href="#main"
+          className="fixed start-4 top-4 z-[60] -translate-y-[200%] rounded-full bg-accent px-4 py-2 text-sm font-medium text-accent-foreground transition-transform focus-visible:translate-y-0"
+        >
+          {t("skipToContent")}
+        </a>
+        <NextIntlClientProvider>
+          <MotionProvider>{children}</MotionProvider>
+        </NextIntlClientProvider>
+      </body>
     </html>
   )
 }

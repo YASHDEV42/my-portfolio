@@ -42,7 +42,6 @@ export function Timeline() {
               {t("titleBefore")} <span className="italic text-accent">{t("titleAccent")}</span> {t("titleAfter")}
             </>
           }
-          intro={t("intro")}
         />
 
         <div className="grid gap-6 lg:grid-cols-2">

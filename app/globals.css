@@ -68,10 +68,11 @@
     color: var(--accent-foreground);
   }
   /* Visible focus states for keyboard navigation */
+  /* The outline follows each element's own radius; forcing one here used to
+     square off pills and circles while they were focused. */
   :focus-visible {
     outline: 2px solid var(--accent);
     outline-offset: 3px;
-    border-radius: 2px;
   }
 }
 
@@ -146,6 +147,52 @@
     pointer-events: none;
     opacity: 0.035;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+}
+
+/*
+  Hero entrance — driven by CSS so it starts with the first paint instead of
+  waiting for hydration. Timings and curves mirror the motion transitions
+  these replaced.
+*/
+@keyframes reveal-line {
+  from {
+    transform: translateY(145%);
+  }
+}
+@keyframes hero-fade {
+  from {
+    opacity: 0;
+  }
+}
+@keyframes hero-rise {
+  from {
+    opacity: 0;
+    transform: translateY(16px);
+  }
+}
+@layer utilities {
+  /* Headline lines rise out of their mask one after another (--line: index). */
+  .reveal-line {
+    animation: reveal-line 0.9s cubic-bezier(0.22, 1, 0.36, 1) calc(0.15s + var(--line, 0) * 0.09s) backwards;
+  }
+  .hero-fade {
+    animation: hero-fade 0.6s ease-in-out 0.5s backwards;
+  }
+  .hero-rise {
+    animation: hero-rise 0.6s ease-in-out 0.4s backwards;
+  }
+  .hero-hint {
+    animation: hero-fade 0.3s cubic-bezier(0.25, 0.1, 0.35, 1) 0.85s backwards;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  /* No entrance at all: content is simply there. */
+  .reveal-line,
+  .hero-fade,
+  .hero-rise,
+  .hero-hint {
+    animation: none;
   }
 }
 
