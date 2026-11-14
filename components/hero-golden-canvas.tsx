@@ -152,18 +152,29 @@ function offsetWithin(el: HTMLElement, root: HTMLElement) {
   return { x, y }
 }
 
-/* Width of the widest rendered line of text inside `el`. Text-node ranges are
-   used so the result doesn't depend on the markup, and widths are unaffected
-   by the reveal animation's vertical transforms. */
-function widestLine(el: HTMLElement) {
+type TextLine = { top: number; bottom: number; width: number }
+
+/* The rendered lines of text inside `el`: vertical extent within `root` and
+   ink width. Widths come from text-node ranges and tops from offsetTop, so
+   neither depends on the markup or is disturbed by the reveal animation's
+   transforms. */
+function textLines(el: HTMLElement, root: HTMLElement): TextLine[] {
   const walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT)
   const range = document.createRange()
-  let widest = 0
+  const lines = new Map<number, TextLine>()
   while (walker.nextNode()) {
+    const parent = walker.currentNode.parentElement
+    if (!parent) continue
     range.selectNodeContents(walker.currentNode)
-    for (const rect of range.getClientRects()) widest = Math.max(widest, rect.width)
+    let width = 0
+    for (const rect of range.getClientRects()) width = Math.max(width, rect.width)
+    if (width === 0) continue
+    const top = offsetWithin(parent, root).y
+    const line = lines.get(top)
+    if (line) line.width = Math.max(line.width, width)
+    else lines.set(top, { top, bottom: top + parent.offsetHeight, width })
   }
-  return widest
+  return [...lines.values()].sort((a, b) => a.top - b.top)
 }
 
 export function HeroGoldenCanvas({ anchorRef }: { anchorRef?: RefObject<HTMLElement | null> }) {
@@ -221,31 +232,60 @@ export function HeroGoldenCanvas({ anchorRef }: { anchorRef?: RefObject<HTMLElem
       // Anchor box in logical (LTR) coordinates. In RTL the canvas is
       // mirrored at paint time, so "start" is always the left here.
       let box = { x: width * 0.08, y: height * 0.2, w: width * 0.84, h: height * 0.5 }
-      let textWidth = 0
+      let lines: TextLine[] = []
       if (anchor) {
         const position = offsetWithin(anchor, host)
         const left = rtl ? width - position.x - anchor.offsetWidth : position.x
         box = { x: left, y: position.y, w: anchor.offsetWidth, h: anchor.offsetHeight }
-        textWidth = widestLine(anchor)
+        lines = textLines(anchor, host)
       }
+      if (lines.length === 0) lines = [{ top: box.y, bottom: box.y + box.h, width: 0 }]
 
-      // The figure starts just past the widest headline line and bleeds past
-      // the container on the end side. The start is limited to a band, so an
-      // unusually long line runs under the faded edge of the drawing instead
-      // of crushing it; `fadeSpan` widens that fade by however far it intrudes.
+      // The figure sits beside the headline, on the end side, and bleeds a
+      // little past the container. Normally it spans all the lines and starts
+      // just past the widest one. When one line is so long that this would
+      // leave almost nothing visible (Turkish on a phone), it stands beside
+      // the run of shorter lines that gives it the most room instead, so it
+      // never has to run underneath the text.
       const wide = width >= 768
       const end = box.x + box.w + (wide ? clamp(box.w * 0.12, 28, 140) : box.w * 0.4)
-      const clearance = textWidth + clamp(box.w * 0.02, 8, 24)
-      const inset = clamp(clearance, box.w * 0.42, box.w * (wide ? 0.66 : 0.7))
-      let figureWidth = end - (box.x + inset)
-      figureWidth = Math.min(figureWidth, box.h * PHI)
-      fadeSpan = Math.max(figureWidth * 0.4, clearance - inset + figureWidth * 0.25)
-      const figureHeight = figureWidth / PHI
-      figure = buildFigure(
-        Math.round(end - figureWidth),
-        Math.round(box.y + (box.h - figureHeight) / 2),
-        Math.round(figureWidth),
-      )
+      const gap = clamp(box.w * 0.02, 8, 24)
+      let best = { x: 0, y: 0, w: 0, shown: 0, score: 0 }
+      for (let first = 0; first < lines.length; first++) {
+        let widest = 0
+        for (let last = first; last < lines.length; last++) {
+          widest = Math.max(widest, lines[last].width)
+          const whole = first === 0 && last === lines.length - 1
+          // The whole headline is measured by its own box, a partial run by
+          // the lines it covers.
+          const top = whole ? box.y : lines[first].top
+          const bandHeight = whole ? box.h : lines[last].bottom - top
+          const start = box.x + Math.max(widest + gap, box.w * 0.42)
+          const w = Math.min(end - start, bandHeight * PHI)
+          if (w <= 0) continue
+          const h = w / PHI
+          // Wide screens hang the figure off the end edge; narrow ones tuck
+          // it against the text, where the visible part is.
+          const x = wide ? end - w : start
+          const shown = Math.min(x + w, width) - x
+          // Spanning the whole headline is the intended composition, so a
+          // partial run has to be clearly better to win.
+          const score = shown * h * (whole ? 1.5 : 1)
+          if (score > best.score) best = { x, y: top + (bandHeight - h) / 2, w, shown, score }
+        }
+      }
+
+      fadeSpan = best.w * 0.4
+      if (best.shown < 64) {
+        // No run leaves real room: fall back to overlapping the long line and
+        // fading the drawing out underneath it.
+        const clearance = Math.max(...lines.map((line) => line.width)) + gap
+        const inset = clamp(clearance, box.w * 0.42, box.w * (wide ? 0.66 : 0.7))
+        const w = Math.min(end - (box.x + inset), box.h * PHI)
+        best = { ...best, x: end - w, y: box.y + (box.h - w / PHI) / 2, w }
+        fadeSpan = Math.max(w * 0.4, clearance - inset + w * 0.25)
+      }
+      figure = buildFigure(Math.round(best.x), Math.round(best.y), Math.round(best.w))
     }
 
     const paint = () => {
