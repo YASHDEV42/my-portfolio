@@ -58,9 +58,11 @@ export function Hero() {
         style={{ y: textY, opacity: fade }}
         className="relative mx-auto w-full max-w-6xl"
       >
+        {/* The floor of the clamp is 2.75rem from 375px up and shrinks with the
+            viewport below that, so the longest word (Turkish) still fits at 320px. */}
         <h1
           ref={headlineRef}
-          className="hero-headline font-serif text-[clamp(2.75rem,9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance"
+          className="hero-headline font-serif text-[clamp(min(2.75rem,11.75vw),9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance"
         >
           <RevealLines
             lines={headline}
@@ -71,9 +73,11 @@ export function Hero() {
 
         <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
           <dl className="hero-fade grid grid-cols-3 gap-4 border-t border-border pt-6 sm:gap-6">
+            {/* Titles are 1.5rem from 375px up and shrink below that, so the
+                three columns never run into each other on narrow phones. */}
             {stats.map((s) => (
               <div key={s.label}>
-                <dt className="font-serif text-2xl font-semibold md:text-3xl">
+                <dt className="font-serif text-[clamp(1.125rem,10vw_-_0.84375rem,1.5rem)]/[calc(2/1.5)] font-semibold md:text-3xl">
                   {s.value}
                 </dt>
                 <dd className="mt-1 text-sm text-muted-foreground">
