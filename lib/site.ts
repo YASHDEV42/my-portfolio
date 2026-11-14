@@ -72,11 +72,25 @@ export type Project = {
  * Card media. `image` uses `Project.image`. `video` is a short muted loop
  * served from /public (poster falls back to `Project.image`). `component`
  * renders an entry of the registry in components/project-previews.
+ *
+ * A video's `src` is either one file or a list of sources in order of
+ * preference; the browser plays the first one it supports:
+ *
+ *   src: [
+ *     { src: "/video/yshai.webm", type: "video/webm" },
+ *     { src: "/video/yshai.mp4", type: "video/mp4" },
+ *   ]
  */
 export type ProjectPreview =
   | { type: "image" }
-  | { type: "video"; src: string; poster?: string }
+  | { type: "video"; src: string | PreviewVideoSource[]; poster?: string }
   | { type: "component"; id: string };
+
+export type PreviewVideoSource = {
+  src: string;
+  /** MIME type, e.g. "video/webm" or "video/mp4". */
+  type: string;
+};
 
 export type ProjectVideo = {
   label: string;

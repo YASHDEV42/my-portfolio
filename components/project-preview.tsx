@@ -3,7 +3,7 @@
 import Image from "next/image"
 import { useEffect, useRef, useState } from "react"
 import { useInView } from "motion/react"
-import type { Project } from "@/lib/site"
+import type { PreviewVideoSource, Project } from "@/lib/site"
 import { projectPreviews } from "./project-previews"
 import { useMediaQuery, usePrefersReducedMotion } from "./use-media-query"
 
@@ -12,8 +12,9 @@ import { useMediaQuery, usePrefersReducedMotion } from "./use-media-query"
   aspect-ratio'd) parent. What it renders is decided by `project.preview`:
 
     image      the static screenshot (default)
-    video      a muted loop over an optimised poster; plays on hover/focus on
-               desktop, while in view on touch, never under reduced motion
+    video      a muted loop (one file or several sources, e.g. WebM + MP4)
+               over an optimised poster; plays on hover/focus on desktop,
+               while in view on touch, never under reduced motion
     component  an animated preview from components/project-previews
 */
 export function ProjectPreview({
@@ -76,7 +77,16 @@ function ComponentPreview({
   )
 }
 
-function VideoPreview({ src, active, children }: { src: string; active: boolean; children: React.ReactNode }) {
+function VideoPreview({
+  src,
+  active,
+  children,
+}: {
+  src: string | PreviewVideoSource[]
+  active: boolean
+  children: React.ReactNode
+}) {
+  const sources: { src: string; type?: string }[] = typeof src === "string" ? [{ src }] : src
   const wrapper = useRef<HTMLDivElement>(null)
   const video = useRef<HTMLVideoElement>(null)
   const [started, setStarted] = useState(false)
@@ -101,7 +111,6 @@ function VideoPreview({ src, active, children }: { src: string; active: boolean;
       {children}
       <video
         ref={video}
-        src={src}
         muted
         loop
         playsInline
@@ -112,7 +121,12 @@ function VideoPreview({ src, active, children }: { src: string; active: boolean;
         className={`absolute inset-0 h-full w-full object-cover object-top transition-opacity duration-500 ${
           started ? "opacity-100" : "opacity-0"
         }`}
-      />
+      >
+        {/* In order of preference; the browser takes the first it can play. */}
+        {sources.map((source) => (
+          <source key={source.src} src={source.src} type={source.type} />
+        ))}
+      </video>
     </div>
   )
 }
