@@ -10,6 +10,7 @@ import {
 import { ArrowDownRight, Download } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { site } from "@/lib/site";
+import { HeroGoldenCanvas } from "./hero-golden-canvas";
 import { Magnetic, RevealLines } from "./motion-primitives";
 
 export function Hero() {
@@ -30,6 +31,7 @@ export function Hero() {
 
   const reduce = useReducedMotion();
   const ref = useRef<HTMLElement>(null);
+  const headlineRef = useRef<HTMLHeadingElement>(null);
 
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -49,28 +51,17 @@ export function Hero() {
       ref={ref}
       id="top"
       className="relative flex min-h-svh scroll-mt-20 flex-col justify-center overflow-hidden px-5 pb-16 pt-28 md:px-8"
-      style={{
-        background:
-          "radial-gradient(560px circle at var(--mx,30%) var(--my,20%), color-mix(in oklch, var(--accent) 12%, transparent), transparent 60%)",
-      }}
     >
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute inset-0 opacity-[0.35]"
-        style={{
-          backgroundImage:
-            "linear-gradient(to right, var(--border) 1px, transparent 1px), linear-gradient(to bottom, var(--border) 1px, transparent 1px)",
-          backgroundSize: "80px 80px",
-          maskImage:
-            "radial-gradient(ellipse at center, black 30%, transparent 75%)",
-        }}
-      />
+      <HeroGoldenCanvas anchorRef={headlineRef} />
 
       <motion.div
         style={{ y: textY, opacity: fade }}
         className="relative mx-auto w-full max-w-6xl"
       >
-        <h1 className="hero-headline font-serif text-[clamp(2.75rem,9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance">
+        <h1
+          ref={headlineRef}
+          className="hero-headline font-serif text-[clamp(2.75rem,9vw,7.5rem)] font-medium tracking-[-0.02em] text-balance"
+        >
           <RevealLines
             lines={headline}
             accentIndex={1}
