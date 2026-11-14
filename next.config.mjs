@@ -12,6 +12,15 @@ const securityHeaders = [
 ]
 
 const nextConfig = {
+  experimental: {
+    // By default all CSS is merged into one chunk, including the Arabic
+    // @font-face rules, and next/font preloads whatever fonts a route's CSS
+    // chunk contains. That made en and tr preload the Arabic faces even though
+    // only app/ar imports them. Graph chunking with a low request cost gives
+    // CSS that a route never imports its own chunk, so the Arabic fonts are
+    // linked and preloaded on /ar only.
+    cssChunking: { type: "graph", requestCost: 4000 },
+  },
   images: {
     // AVIF where the browser supports it, WebP otherwise.
     formats: ["image/avif", "image/webp"],
