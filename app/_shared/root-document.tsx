@@ -31,7 +31,7 @@ export async function rootMetadata(locale: AppLocale): Promise<Metadata> {
     keywords: ["Yahya Chanat", "Full-Stack Engineer", "Software Engineer", "Next.js", "React", "NestJS", "SaaS", "Web Applications"],
     authors: [{ name: site.name, url: site.url }], creator: site.name,
     alternates: { canonical, languages: { en: `${site.url}/en`, tr: `${site.url}/tr`, ar: `${site.url}/ar`, "x-default": `${site.url}/en` } },
-    openGraph: { type: "website", locale: locale === "ar" ? "ar_AR" : locale === "tr" ? "tr_TR" : "en_US", url: canonical, title: t("title"), description: t("description"), siteName: site.name, images: [{ url: "/og.png", width: 1024, height: 1024, alt: t("title") }] },
+    openGraph: { type: "website", locale: locale === "ar" ? "ar_AR" : locale === "tr" ? "tr_TR" : "en_US", url: canonical, title: t("title"), description: t("description"), siteName: site.name, images: [{ url: "/og.png", width: 1200, height: 630, alt: t("title") }] },
     twitter: { card: "summary_large_image", title: t("title"), description: t("description"), images: ["/og.png"] },
     icons: { icon: [{ url: "/favicon.svg", type: "image/svg+xml" }] }, robots: { index: true, follow: true }
   }
