@@ -140,6 +140,9 @@ export function SiteNav() {
   ]
   const [scrolled, setScrolled] = useState(false)
   const [open, setOpen] = useState(false)
+  const toggleRef = useRef<HTMLButtonElement>(null)
+  const menuRef = useRef<HTMLDivElement>(null)
+  const mobileMenuId = useId()
   const { scrollYProgress } = useScroll()
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, mass: 0.2 })
 
@@ -155,6 +158,45 @@ export function SiteNav() {
     return () => {
       document.body.style.overflow = ""
     }
+  }, [open])
+
+  // While the mobile menu is open it behaves as a modal: focus moves into it,
+  // Tab cycles between the toggle and the menu's controls, and Escape closes
+  // it and hands focus back to the toggle.
+  useEffect(() => {
+    const menu = menuRef.current
+    const toggle = toggleRef.current
+    if (!open || !menu || !toggle) return
+
+    menu.querySelector<HTMLElement>("a[href]")?.focus({ preventScroll: true })
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        // An open language list closes itself first; the next Escape closes the menu.
+        if (menu.querySelector("[role='menu']")) return
+        event.preventDefault()
+        setOpen(false)
+        toggle.focus()
+        return
+      }
+      if (event.key !== "Tab") return
+      const items = [toggle, ...menu.querySelectorAll<HTMLElement>("a[href], button:not([disabled])")]
+      const first = items[0]
+      const last = items[items.length - 1]
+      const active = document.activeElement as HTMLElement | null
+      if (!active || !items.includes(active)) {
+        event.preventDefault()
+        first.focus()
+      } else if (event.shiftKey && active === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && active === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    }
+    document.addEventListener("keydown", onKeyDown)
+    return () => document.removeEventListener("keydown", onKeyDown)
   }, [open])
 
   return (
@@ -204,10 +246,13 @@ export function SiteNav() {
           </div>
 
           <button
+            ref={toggleRef}
+            type="button"
             className="relative z-50 flex h-10 w-10 items-center justify-center lg:hidden"
             onClick={() => setOpen((o) => !o)}
             aria-label={open ? t("closeMenu") : t("openMenu")}
             aria-expanded={open}
+            aria-controls={mobileMenuId}
           >
             <span className="sr-only">{open ? t("closeMenu") : t("openMenu")}</span>
             <div className="relative h-4 w-6">
@@ -240,6 +285,11 @@ export function SiteNav() {
       <AnimatePresence>
         {open && (
           <motion.div
+            ref={menuRef}
+            id={mobileMenuId}
+            role="dialog"
+            aria-modal="true"
+            aria-label={t("menu")}
             className="fixed inset-0 z-40 flex flex-col justify-center bg-background px-6 lg:hidden"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
