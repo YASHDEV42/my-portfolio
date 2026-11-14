@@ -50,7 +50,7 @@ export default async function CaseStudyPage({ params }: { params: Promise<{ loca
         {project.repoPrivate && <button type="button" aria-disabled="true" className="group/private relative inline-flex cursor-not-allowed items-center gap-2 rounded-full border border-border px-5 py-3 font-medium text-muted-foreground opacity-65" aria-describedby="private-repository-note" title={t("CaseStudy.privateRepository")}><CodeXml className="h-4 w-4" aria-hidden="true" /><span className="hidden sm:inline">{t("CaseStudy.source")}</span><span className="sm:hidden">{t("CaseStudy.privateSource")}</span><span id="private-repository-note" role="tooltip" className="pointer-events-none absolute start-0 top-full z-10 mt-2 hidden whitespace-nowrap rounded-sm border border-border bg-card px-3 py-2 text-xs font-normal text-foreground opacity-0 shadow-xl transition-opacity group-hover/private:opacity-100 group-focus-visible/private:opacity-100 sm:block">{t("CaseStudy.privateRepository")}</span></button>}
       </div></Reveal>
     </header>
-    <Reveal delay={0.05}><ProjectMedia name={project.name} image={project.image} videos={project.videos} /></Reveal>
+    <Reveal delay={0.05}><ProjectMedia name={project.name} image={project.image} videos={project.videos} url={project.live} /></Reveal>
     <div className="mt-16 grid gap-12 md:grid-cols-[1fr_2fr] md:gap-16"><aside className="md:sticky md:top-28 md:self-start"><Reveal><dl className="space-y-6">
       <div><dt className="label text-muted-foreground">{t("CaseStudy.role")}</dt><dd className="mt-1.5">{project.role}</dd></div>
       <div><dt className="label text-muted-foreground">{t("CaseStudy.year")}</dt><dd className="mt-1.5" dir="ltr">{project.year}</dd></div>

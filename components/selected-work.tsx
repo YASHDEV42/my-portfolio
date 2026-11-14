@@ -1,14 +1,19 @@
 "use client"
 
-import Image from "next/image"
 import { Link } from "@/i18n/navigation"
 import { useFormatter, useTranslations } from "next-intl"
 import { useRef, useState } from "react"
-import { motion, useReducedMotion } from "motion/react"
+import { useReducedMotion } from "motion/react"
 import { ArrowUpRight, Play } from "lucide-react"
 import { getProjects, type Project } from "@/lib/site"
 import { SectionHeading } from "./section-heading"
 import { Reveal } from "./motion-primitives"
+import { BrowserFrame, displayHost } from "./browser-frame"
+import { ProjectPreview } from "./project-preview"
+
+/* Every card is the same size, so the screenshot slot is too:
+   card column − card padding, at each breakpoint. */
+const previewSizes = "(min-width: 1216px) 528px, (min-width: 768px) calc(50vw - 80px), calc(100vw - 66px)"
 
 export function SelectedWork() {
   const t = useTranslations()
@@ -29,8 +34,8 @@ export function SelectedWork() {
 
         <div className="grid gap-6 md:grid-cols-2 md:gap-8">
           {projects.map((p, i) => (
-            <Reveal key={p.slug} delay={(i % 2) * 0.08} className={i % 3 === 0 ? "md:col-span-2" : ""}>
-              <ProjectCard project={p} wide={i % 3 === 0} />
+            <Reveal key={p.slug} delay={(i % 2) * 0.08}>
+              <ProjectCard project={p} />
             </Reveal>
           ))}
         </div>
@@ -39,12 +44,12 @@ export function SelectedWork() {
   )
 }
 
-function ProjectCard({ project, wide }: { project: Project; wide: boolean }) {
+function ProjectCard({ project }: { project: Project }) {
   const t = useTranslations("Work")
   const format = useFormatter()
   const reduce = useReducedMotion()
   const ref = useRef<HTMLDivElement>(null)
-  const [hovered, setHovered] = useState(false)
+  const [active, setActive] = useState(false)
 
   function handleMove(e: React.MouseEvent<HTMLDivElement>) {
     if (reduce || !ref.current) return
@@ -66,14 +71,16 @@ function ProjectCard({ project, wide }: { project: Project; wide: boolean }) {
       href={`/work/${project.slug}`}
       className="group block h-full"
       aria-label={`${t("viewCaseStudy", { name: project.name, tagline: project.tagline })}${project.videos?.length ? `; ${t("demoAvailable")}` : ""}`}
+      onFocus={() => setActive(true)}
+      onBlur={() => setActive(false)}
     >
       <div
         ref={ref}
         onMouseMove={handleMove}
-        onMouseEnter={() => setHovered(true)}
+        onMouseEnter={() => setActive(true)}
         onMouseLeave={() => {
           reset()
-          setHovered(false)
+          setActive(false)
         }}
         className="relative flex h-full flex-col overflow-hidden rounded-lg border border-border bg-card transition-colors duration-500 group-hover:border-accent/50"
         style={{
@@ -82,41 +89,40 @@ function ProjectCard({ project, wide }: { project: Project; wide: boolean }) {
           transition: "transform 0.3s ease-out, border-color 0.5s",
         }}
       >
-        <div className={`relative overflow-hidden ${wide ? "aspect-[16/8]" : "aspect-[16/10]"}`}>
-          <Image
-            src={project.image || "/placeholder.svg"}
-            alt={t("interfaceAlt", { name: project.name })}
-            fill
-            sizes={wide ? "(max-width: 768px) 100vw, 1152px" : "(max-width: 768px) 100vw, 576px"}
-            className="object-cover object-top transition-transform duration-[900ms] ease-out group-hover:scale-[1.04]"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-card via-card/10 to-transparent" />
-          <div className="absolute start-4 top-4 flex flex-wrap gap-2">
-            <span className="rounded-full bg-background/70 px-3 py-1 text-xs font-medium leading-relaxed backdrop-blur-sm">
-              {project.category}
-            </span>
+        {/* Framed preview: the screenshot sits in a small browser window with
+            room around it instead of running edge to edge. */}
+        <div className="p-3 pb-0 sm:p-4 sm:pb-0">
+          <BrowserFrame label={displayHost(project.live)}>
+            <div className="relative aspect-video overflow-hidden">
+              <ProjectPreview
+                project={project}
+                alt={t("interfaceAlt", { name: project.name })}
+                animatedAlt={t("previewAlt", { name: project.name })}
+                sizes={previewSizes}
+                active={active}
+              />
+              <span
+                aria-hidden="true"
+                className="absolute end-3 top-3 flex h-10 w-10 scale-[0.6] items-center justify-center rounded-full bg-accent text-accent-foreground opacity-0 transition duration-300 group-hover:scale-100 group-hover:opacity-100 group-focus-visible:scale-100 group-focus-visible:opacity-100"
+              >
+                <ArrowUpRight className="h-5 w-5 rtl:rotate-[-90deg]" />
+              </span>
+            </div>
+          </BrowserFrame>
+        </div>
+
+        <div className="flex flex-1 flex-col p-5 sm:p-6">
+          <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-muted-foreground">
+            <span className="label">{project.category}</span>
             {project.videos?.length && (
-              <span className="inline-flex items-center gap-1.5 rounded-full bg-background/70 px-3 py-1 text-xs font-medium leading-relaxed backdrop-blur-sm">
-                <Play className="h-3 w-3 fill-current" aria-hidden="true" />
+              <span className="label inline-flex items-center gap-1.5">
+                <Play className="h-2.5 w-2.5 fill-current rtl:rotate-180" aria-hidden="true" />
                 {project.videos.length > 1 ? t("demoVideos") : t("demoVideo")}
               </span>
             )}
+            <span className="label ms-auto">{format.number(Number(project.year), { useGrouping: false })}</span>
           </div>
-          <motion.div
-            className="absolute end-4 top-4 flex h-11 w-11 items-center justify-center rounded-full bg-accent text-accent-foreground"
-            initial={false}
-            animate={reduce ? {} : { scale: hovered ? 1 : 0.6, opacity: hovered ? 1 : 0 }}
-            transition={{ duration: 0.3 }}
-          >
-            <ArrowUpRight className="h-5 w-5 rtl:rotate-[-90deg]" />
-          </motion.div>
-        </div>
-
-        <div className="flex flex-1 flex-col p-6">
-          <div className="flex items-baseline justify-between gap-4">
-            <h3 className="font-serif text-2xl font-semibold leading-tight tracking-tight">{project.name}</h3>
-            <span className="label text-muted-foreground">{format.number(Number(project.year), { useGrouping: false })}</span>
-          </div>
+          <h3 className="mt-3 font-serif text-2xl font-semibold leading-tight tracking-tight">{project.name}</h3>
           <p className="mt-2 text-muted-foreground text-pretty">{project.tagline}</p>
           <div className="mt-auto flex flex-wrap gap-2 pt-6">
             {project.stack.map((s) => (
