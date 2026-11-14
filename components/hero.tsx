@@ -11,7 +11,7 @@ import { ArrowDownRight, Download } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { site } from "@/lib/site";
 import { HeroGoldenCanvas } from "./hero-golden-canvas";
-import { INSTANT, Magnetic, RevealLines } from "./motion-primitives";
+import { Magnetic, RevealLines } from "./motion-primitives";
 
 export function Hero() {
   const t = useTranslations("Hero");
@@ -70,12 +70,7 @@ export function Hero() {
         </h1>
 
         <div className="mt-14 grid gap-8 lg:grid-cols-[minmax(0,1fr)_auto] lg:items-end">
-          <motion.dl
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={reduce ? INSTANT : { duration: 0.8, delay: 0.8 }}
-            className="grid grid-cols-3 gap-4 border-t border-border pt-6 sm:gap-6"
-          >
+          <dl className="hero-fade grid grid-cols-3 gap-4 border-t border-border pt-6 sm:gap-6">
             {stats.map((s) => (
               <div key={s.label}>
                 <dt className="font-serif text-2xl font-semibold md:text-3xl">
@@ -86,14 +81,9 @@ export function Hero() {
                 </dd>
               </div>
             ))}
-          </motion.dl>
+          </dl>
 
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={reduce ? INSTANT : { duration: 0.7, delay: 0.62 }}
-            className="flex flex-wrap items-center gap-4"
-          >
+          <div className="hero-rise flex flex-wrap items-center gap-4">
             <Magnetic>
               <a
                 href="#work"
@@ -114,26 +104,27 @@ export function Hero() {
                 {t("downloadCv")}
               </a>
             </Magnetic>
-          </motion.div>
+          </div>
         </div>
       </motion.div>
 
+      {/* The scroll-linked fade lives on the link; the entrance animation on
+          the inner span, so the two never compete for the same property. */}
       <motion.a
         href="#work"
         aria-label={t("scrollToWork")}
         style={{ opacity: fade }}
-        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 items-center gap-2 text-muted-foreground md:flex"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={reduce ? INSTANT : { delay: 1.1 }}
+        className="absolute bottom-6 left-1/2 hidden -translate-x-1/2 text-muted-foreground md:block"
       >
-        <span className="label">{t("scroll")}</span>
-        <motion.span
-          animate={reduce ? {} : { y: [0, 6, 0] }}
-          transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
-        >
-          <ArrowDownRight className="h-4 w-4" />
-        </motion.span>
+        <span className="hero-hint flex items-center gap-2">
+          <span className="label">{t("scroll")}</span>
+          <motion.span
+            animate={reduce ? {} : { y: [0, 6, 0] }}
+            transition={{ repeat: Infinity, duration: 1.6, ease: "easeInOut" }}
+          >
+            <ArrowDownRight className="h-4 w-4" />
+          </motion.span>
+        </span>
       </motion.a>
     </section>
   );

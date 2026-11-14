@@ -1,6 +1,6 @@
 "use client"
 
-import { type ReactNode, useRef } from "react"
+import { type CSSProperties, type ReactNode, useRef } from "react"
 import {
   motion,
   useReducedMotion,
@@ -13,7 +13,7 @@ import { usePrefersReducedMotion } from "./use-media-query"
 
 const EASE_OUT = [0.22, 1, 0.36, 1] as const
 /* Used under prefers-reduced-motion: same end state, no movement. */
-export const INSTANT = { duration: 0 } as const
+const INSTANT = { duration: 0 } as const
 
 /* Scroll-triggered reveal.
 
@@ -52,7 +52,10 @@ export function Reveal({
   )
 }
 
-/* Staggered word/line reveal for editorial headlines. */
+/* Staggered line reveal for editorial headlines. Pure CSS (see `.reveal-line`
+   in globals.css): the lines are in the server HTML and start animating with
+   the first paint, so the largest text on the page doesn't wait for
+   hydration. Reduced motion turns the animation off in CSS. */
 export function RevealLines({
   lines,
   className,
@@ -66,20 +69,16 @@ export function RevealLines({
   lineWrapperClassName?: string
   accentIndex?: number
 }) {
-  const reduce = useReducedMotion()
-
   return (
     <span className={className}>
       {lines.map((line, i) => (
         <span key={i} className={`reveal-line-mask block ${lineWrapperClassName ?? ""}`}>
-          <motion.span
-            className={`block ${lineClassName ?? ""} ${i === accentIndex ? "text-accent italic" : ""}`}
-            initial={{ y: "145%" }}
-            animate={{ y: 0 }}
-            transition={reduce ? INSTANT : { duration: 0.9, delay: 0.15 + i * 0.09, ease: EASE_OUT }}
+          <span
+            className={`reveal-line block ${lineClassName ?? ""} ${i === accentIndex ? "text-accent italic" : ""}`}
+            style={{ "--line": i } as CSSProperties}
           >
             {line}
-          </motion.span>
+          </span>
         </span>
       ))}
     </span>
